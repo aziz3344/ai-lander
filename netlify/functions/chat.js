@@ -19,7 +19,7 @@ exports.handler = async (event) => {
       },
       body: JSON.stringify({
         // موديل فابور وسريع فـ OpenRouter
-        model: "meta-llama/llama-3.2-3b-instruct:free",
+        model: "openrouter/free",
         max_tokens: 80,
         messages: [
           {
