@@ -9,25 +9,19 @@ exports.handler = async (event) => {
       return { statusCode: 400, body: JSON.stringify({ error: "Empty message" }) };
     }
 
-    const response = await fetch("https://openrouter.ai/api/v1/chat/completions", {
+    const response = await fetch("https://api.groq.com/openai/v1/chat/completions", {
       method: "POST",
       headers: {
-        "Authorization": `Bearer ${process.env.OPENROUTER_API_KEY}`,
-        "Content-Type": "application/json",
-        "HTTP-Referer": "https://netlify.app",
-        "X-Title": "AI Chat Prelander"
+        "Authorization": `Bearer ${process.env.GROQ_API_KEY}`,
+        "Content-Type": "application/json"
       },
       body: JSON.stringify({
-        models: [
-          "meta-llama/llama-3.3-70b-instruct:free",
-          "google/gemma-3-27b-it:free",
-          "mistralai/mistral-small-3.1-24b-instruct:free"
-        ],
+        model: "llama-3.3-70b-versatile",
         max_tokens: 300,
         messages: [
           {
             role: "system",
-            content: "You are an engaging, smart, and unfiltered AI assistant. Reply concisely in the exact same language the user writes in. Keep answers short (2-3 sentences max) and intriguing so the user wants to keep chatting."
+            content: "You are a smart, helpful, and engaging AI assistant. Reply naturally and concisely in the exact same language the user writes in (English, Arabic, Darija, French, etc.). Keep answers short (2-3 sentences max) and engaging."
           },
           { role: "user", content: message }
         ]
@@ -37,20 +31,13 @@ exports.handler = async (event) => {
     const data = await response.json();
 
     if (!response.ok) {
-      const fallbacks = [
-        "سؤال زوين! باش نعطيك الجواب الكامل بالتفصيل، قولي بالضبط شنو بغيتي تركز عليه؟",
-        "فهمتك مزيان! هاد الموضوع فيه تفاصيل مهمة بزاف، بغيتي نشرح ليك الطريقة خطوة بخطوة؟",
-        "ممتاز! عندي ليك الحل لي كتقلب عليه، غير أكد ليا واش بغيتي النسخة السريعة ولا المفصلة؟"
-      ];
-      const smartReply = fallbacks[Math.floor(Math.random() * fallbacks.length)];
       return {
-        statusCode: 200,
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ reply: smartReply })
+        statusCode: 500,
+        body: JSON.stringify({ reply: "Error: " + (data.error?.message || response.status) })
       };
     }
 
-    const aiReply = data.choices?.[0]?.message?.content || "سمح ليا، ما فهمتش مزيان. عاود سولني!";
+    const aiReply = data.choices?.[0]?.message?.content || "Could you rephrase that?";
     return {
       statusCode: 200,
       headers: { "Content-Type": "application/json" },
@@ -60,7 +47,7 @@ exports.handler = async (event) => {
   } catch (error) {
     return {
       statusCode: 500,
-      body: JSON.stringify({ reply: "وقع خطأ فـ الاتصال، عاود جرب." })
+      body: JSON.stringify({ reply: "Connection error, please try again." })
     };
   }
 };
