@@ -18,9 +18,12 @@ exports.handler = async (event) => {
         "X-Title": "AI Chat Prelander"
       },
       body: JSON.stringify({
-        // موديل فابور وسريع فـ OpenRouter
-        model: "openrouter/free",
-        max_tokens: 80,
+        models: [
+          "meta-llama/llama-3.3-70b-instruct:free",
+          "google/gemma-3-27b-it:free",
+          "mistralai/mistral-small-3.1-24b-instruct:free"
+        ],
+        max_tokens: 300,
         messages: [
           {
             role: "system",
@@ -36,7 +39,7 @@ exports.handler = async (event) => {
     if (!response.ok) {
       return {
         statusCode: 500,
-        body: JSON.stringify({ reply: "Error: " + (data.error?.message || response.status) })
+        body: JSON.stringify({ reply: "السيرفر عامر شوية دابا، عاود جرب بعد لحظة..." })
       };
     }
 
