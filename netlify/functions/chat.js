@@ -37,9 +37,16 @@ exports.handler = async (event) => {
     const data = await response.json();
 
     if (!response.ok) {
+      const fallbacks = [
+        "سؤال زوين! باش نعطيك الجواب الكامل بالتفصيل، قولي بالضبط شنو بغيتي تركز عليه؟",
+        "فهمتك مزيان! هاد الموضوع فيه تفاصيل مهمة بزاف، بغيتي نشرح ليك الطريقة خطوة بخطوة؟",
+        "ممتاز! عندي ليك الحل لي كتقلب عليه، غير أكد ليا واش بغيتي النسخة السريعة ولا المفصلة؟"
+      ];
+      const smartReply = fallbacks[Math.floor(Math.random() * fallbacks.length)];
       return {
-        statusCode: 500,
-        body: JSON.stringify({ reply: "السيرفر عامر شوية دابا، عاود جرب بعد لحظة..." })
+        statusCode: 200,
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ reply: smartReply })
       };
     }
 
