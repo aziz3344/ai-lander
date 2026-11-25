@@ -1184,7 +1184,7 @@ userInput.addEventListener("keypress", (e) => {
 });
 
 offerLink.addEventListener("click", (e) => {
- if (CONFIG.offerUrl === "https://araplhn.org/4/fe74be98b4e1a00924ea480932f200f9" || !/^https?:\/\//i.test(CONFIG.offerUrl)) {
+ if (!/^https?:\/\//i.test(CONFIG.offerUrl)) {
   e.preventDefault();
   alert("Add your Offer URL or Adsterra Direct Link in CONFIG.offerUrl");
  } else {
