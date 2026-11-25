@@ -16,12 +16,12 @@ exports.handler = async (event) => {
         "Content-Type": "application/json"
       },
       body: JSON.stringify({
-        model: model: "llama-3.1-8b-instant",,
+        model: "llama-3.1-8b-instant",
         max_tokens: 300,
         messages: [
           {
             role: "system",
-            content: "You are a smart, helpful, and engaging AI assistant. Reply naturally and concisely in the exact same language the user writes in (English, Arabic, Darija, French, etc.). Keep answers short (2-3 sentences max) and engaging."
+            content: "You are a smart, helpful, and engaging AI assistant. Reply naturally and concisely in the exact same language the user writes in (English, Arabic, Darija, Amazigh, French, etc.). Keep answers short (2-3 sentences max) and engaging."
           },
           { role: "user", content: message }
         ]
