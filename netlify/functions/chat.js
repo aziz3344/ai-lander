@@ -1,3 +1,33 @@
+let cachedModel = null;
+
+async function getWorkingModel(apiKey) {
+  if (cachedModel) return cachedModel;
+
+  const res = await fetch("https://api.groq.com/openai/v1/models", {
+    headers: { "Authorization": `Bearer ${apiKey}` }
+  });
+  const data = await res.json();
+
+  if (!res.ok || !data.data) {
+    throw new Error(data.error?.message || "Cannot fetch models");
+  }
+
+  const chatModels = data.data
+    .map(m => m.id)
+    .filter(id => !/whisper|tts|guard|embed|audio|speech|orpheus|playai/i.test(id));
+
+  cachedModel =
+    chatModels.find(id => /llama-4|llama-3|llama/i.test(id)) ||
+    chatModels.find(id => /qwen|gemma|deepseek|mixtral|gpt/i.test(id)) ||
+    chatModels[0];
+
+  if (!cachedModel) {
+    throw new Error("No chat models available on this Groq account");
+  }
+
+  return cachedModel;
+}
+
 exports.handler = async (event) => {
   if (event.httpMethod !== "POST") {
     return { statusCode: 405, body: "Method Not Allowed" };
@@ -9,14 +39,17 @@ exports.handler = async (event) => {
       return { statusCode: 400, body: JSON.stringify({ error: "Empty message" }) };
     }
 
+    const apiKey = process.env.GROQ_API_KEY;
+    const model = await getWorkingModel(apiKey);
+
     const response = await fetch("https://api.groq.com/openai/v1/chat/completions", {
       method: "POST",
       headers: {
-        "Authorization": `Bearer ${process.env.GROQ_API_KEY}`,
+        "Authorization": `Bearer ${apiKey}`,
         "Content-Type": "application/json"
       },
       body: JSON.stringify({
-        model: "llama-3.1-8b-instant",
+        model,
         max_tokens: 300,
         messages: [
           {
@@ -31,9 +64,10 @@ exports.handler = async (event) => {
     const data = await response.json();
 
     if (!response.ok) {
+      cachedModel = null;
       return {
         statusCode: 500,
-        body: JSON.stringify({ reply: "Error: " + (data.error?.message || response.status) })
+        body: JSON.stringify({ reply: "Error (" + model + "): " + (data.error?.message || response.status) })
       };
     }
 
@@ -47,7 +81,7 @@ exports.handler = async (event) => {
   } catch (error) {
     return {
       statusCode: 500,
-      body: JSON.stringify({ reply: "Connection error, please try again." })
+      body: JSON.stringify({ reply: "Error: " + error.message })
     };
   }
 };
