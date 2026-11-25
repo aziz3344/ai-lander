@@ -19,7 +19,7 @@ exports.handler = async (event) => {
       },
       body: JSON.stringify({
         // موديل فابور وسريع فـ OpenRouter
-        model: "openrouter/free",
+        model: "perplexity/pplx-decider-v1.3:free",
         max_tokens: 80,
         messages: [
           {
