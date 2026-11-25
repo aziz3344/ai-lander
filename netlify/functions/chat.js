@@ -36,7 +36,7 @@ exports.handler = async (event) => {
     if (!response.ok) {
       return {
         statusCode: 500,
-        body: JSON.stringify({ reply: "السيرفر عامر شوية دابا، عاود جرب بعد لحظة..." })
+        body: JSON.stringify({ reply: "Error: " + (data.error?.message || response.status) })
       };
     }
 
