@@ -1,5 +1,27 @@
 <!DOCTYPE html>
 <html lang="en" dir="ltr" class="dark">
+  <style>
+  /* إخفاء الشات نهائياً وتقاديد حجم البطاقة */
+  section:has(> div > #lock-badge) {
+    height: auto !important;
+    min-height: 0 !important;
+  }
+  section:has(> div > #lock-badge) > :not(:has(#lock-badge)) {
+    display: none !important;
+  }
+  /* إظهار نافذة القفل مباشرة وتفعيل الكليك */
+  div:has(> #lock-badge) {
+    position: relative !important;
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    justify-content: center !important;
+    opacity: 1 !important;
+    visibility: visible !important;
+    pointer-events: auto !important;
+    padding: 2rem 1.5rem !important;
+  }
+</style>
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
