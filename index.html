@@ -8,7 +8,7 @@
   <!-- Tailwind CSS -->
   <script src="https://cdn.tailwindcss.com"></script>
 
-  <!-- Google Fonts: Inter (EN) & Cairo (AR) -->
+  <!-- Google Fonts: Inter & Cairo -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
@@ -19,13 +19,9 @@
        ========================================================================== */
     :root {
       --bg-deep: #0d0205;
-      --bg-surface: rgba(28, 6, 12, 0.72);
       --neon-red: #ff1744;
       --neon-crimson: #dc2626;
       --neon-rose: #f43f5e;
-      --neon-glow-soft: rgba(255, 23, 68, 0.35);
-      --neon-glow-strong: rgba(255, 23, 68, 0.7);
-      --glass-border: rgba(255, 23, 68, 0.32);
       --text-main: #fff1f2;
       --text-muted: #fda4af;
     }
@@ -35,7 +31,7 @@
       padding: 0;
       background-color: var(--bg-deep);
       color: var(--text-main);
-      font-family: 'Inter', sans-serif;
+      font-family: 'Inter', system-ui, -apple-system, sans-serif;
       overflow-x: hidden;
       min-height: 100vh;
     }
@@ -61,9 +57,9 @@
       z-index: 1;
       pointer-events: none;
       background:
-        radial-gradient(circle at 50% 20%, rgba(255, 23, 68, 0.22) 0%, transparent 55%),
-        radial-gradient(circle at 85% 85%, rgba(220, 38, 38, 0.16) 0%, transparent 50%),
-        radial-gradient(circle at 15% 75%, rgba(244, 63, 94, 0.14) 0%, transparent 45%);
+        radial-gradient(circle at 50% 20%, rgba(255, 23, 68, 0.24) 0%, transparent 55%),
+        radial-gradient(circle at 85% 85%, rgba(220, 38, 38, 0.18) 0%, transparent 50%),
+        radial-gradient(circle at 15% 75%, rgba(244, 63, 94, 0.15) 0%, transparent 45%);
     }
 
     /* ==========================================================================
@@ -78,13 +74,12 @@
       padding: 12px 0 18px;
     }
 
-    /* Red Neon Aura behind center video */
     .center-aura {
       position: absolute;
-      width: 210px;
-      height: 250px;
+      width: 215px;
+      height: 255px;
       border-radius: 30px;
-      background: radial-gradient(circle, rgba(255, 23, 68, 0.6) 0%, rgba(220, 38, 38, 0.25) 45%, transparent 72%);
+      background: radial-gradient(circle, rgba(255, 23, 68, 0.62) 0%, rgba(220, 38, 38, 0.25) 45%, transparent 72%);
       filter: blur(22px);
       animation: auraPulse 3s ease-in-out infinite;
       z-index: 0;
@@ -97,7 +92,7 @@
       border-radius: 20px;
       background: #1a050a;
       border: 1.5px solid rgba(255, 23, 68, 0.45);
-      transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
       display: block;
       text-decoration: none;
     }
@@ -114,7 +109,6 @@
       transform: scale(1.07);
     }
 
-    /* Side Videos (Left & Right) */
     .video-side {
       width: 112px;
       height: 162px;
@@ -123,13 +117,8 @@
       box-shadow: 0 12px 28px rgba(0, 0, 0, 0.75), 0 0 18px rgba(255, 23, 68, 0.28);
     }
 
-    .video-left {
-      transform: translateX(18px) rotate(-7deg);
-    }
-
-    .video-right {
-      transform: translateX(-18px) rotate(7deg);
-    }
+    .video-left { transform: translateX(18px) rotate(-7deg); }
+    .video-right { transform: translateX(-18px) rotate(7deg); }
 
     .video-left:hover {
       transform: translateX(14px) rotate(-4deg) scale(1.04);
@@ -143,7 +132,6 @@
       z-index: 15;
     }
 
-    /* Center Main Video */
     .video-center {
       width: 156px;
       height: 215px;
@@ -161,17 +149,10 @@
     }
 
     @media (min-width: 420px) {
-      .video-side {
-        width: 126px;
-        height: 180px;
-      }
-      .video-center {
-        width: 172px;
-        height: 236px;
-      }
+      .video-side { width: 126px; height: 180px; }
+      .video-center { width: 172px; height: 236px; }
     }
 
-    /* Play Button Overlay */
     .play-overlay {
       position: absolute;
       inset: 0;
@@ -192,16 +173,8 @@
       animation: playPulse 2.2s infinite;
     }
 
-    .video-center .play-btn-circle {
-      width: 56px;
-      height: 56px;
-    }
-
-    .video-side .play-btn-circle {
-      width: 40px;
-      height: 40px;
-      background: rgba(220, 38, 38, 0.82);
-    }
+    .video-center .play-btn-circle { width: 56px; height: 56px; }
+    .video-side .play-btn-circle { width: 40px; height: 40px; background: rgba(220, 38, 38, 0.82); }
 
     @keyframes auraPulse {
       0%, 100% { transform: scale(0.95); opacity: 0.72; }
@@ -215,17 +188,37 @@
     }
 
     /* ==========================================================================
-       3. GLASSMORPHISM UNLOCK CARD & RED NEON CTA BUTTON
+       3. PREMIUM FROSTED BLUR GLASS UNLOCK WINDOW
        ========================================================================== */
-    .glass-card {
-      background: linear-gradient(160deg, rgba(42, 8, 16, 0.82) 0%, rgba(15, 3, 7, 0.92) 100%);
-      backdrop-filter: blur(18px);
-      -webkit-backdrop-filter: blur(18px);
-      border: 1px solid var(--glass-border);
+    .blur-glass-card {
+      position: relative;
+      background: linear-gradient(
+        145deg,
+        rgba(255, 255, 255, 0.09) 0%,
+        rgba(255, 23, 68, 0.10) 45%,
+        rgba(15, 3, 7, 0.48) 100%
+      );
+      backdrop-filter: blur(28px) saturate(165%);
+      -webkit-backdrop-filter: blur(28px) saturate(165%);
+      border: 1px solid rgba(255, 130, 155, 0.28);
       box-shadow:
-        0 20px 50px rgba(0, 0, 0, 0.75),
-        0 0 32px rgba(255, 23, 68, 0.2),
-        inset 0 1px 0 rgba(255, 255, 255, 0.08);
+        0 24px 60px rgba(0, 0, 0, 0.65),
+        0 0 38px rgba(255, 23, 68, 0.22),
+        inset 0 1.5px 0 rgba(255, 255, 255, 0.22),
+        inset 0 -1px 0 rgba(255, 23, 68, 0.25);
+      overflow: hidden;
+    }
+
+    /* Subtle Glass Sheen Reflection */
+    .blur-glass-card::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: -50%;
+      width: 200%;
+      height: 45%;
+      background: linear-gradient(180deg, rgba(255, 255, 255, 0.09) 0%, transparent 100%);
+      pointer-events: none;
     }
 
     .neon-cta-btn {
@@ -249,6 +242,20 @@
       0%, 100% { background-position: 0% 50%; }
       50% { background-position: 100% 50%; }
     }
+
+    /* Language Selector Styling */
+    .lang-select {
+      background: rgba(35, 6, 14, 0.72);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      border: 1px solid rgba(255, 23, 68, 0.35);
+      color: #ffe4e6;
+      outline: none;
+    }
+    .lang-select option {
+      background: #1a050a;
+      color: #fff1f2;
+    }
   </style>
 </head>
 <body class="relative flex flex-col items-center justify-center min-h-screen px-3 py-4 sm:py-6 selection:bg-red-600/40 selection:text-white">
@@ -264,14 +271,34 @@
       <span id="badge-top-text">Private Videos • 18+</span>
     </div>
 
-    <div class="flex items-center gap-1.5 bg-red-950/65 border border-red-500/35 rounded-full p-1 backdrop-blur-md">
-      <button id="btn-lang-en" onclick="setLanguage('en')" class="px-2.5 py-1 text-xs font-semibold rounded-full transition-all bg-red-600 text-white shadow-sm cursor-pointer">
-        EN
-      </button>
-      <button id="btn-lang-ar" onclick="setLanguage('ar')" class="px-2.5 py-1 text-xs font-semibold rounded-full transition-all text-rose-200/75 hover:text-white cursor-pointer">
-        AR
-      </button>
-    </div>
+    <!-- Auto-Detected World Language Selector -->
+    <select id="lang-selector" onchange="setLanguage(this.value)" aria-label="Select Language" class="lang-select text-xs font-semibold rounded-full px-3 py-1.5 cursor-pointer">
+      <option value="en">🌐 EN</option>
+      <option value="ar">🌐 AR</option>
+      <option value="fr">🌐 FR</option>
+      <option value="es">🌐 ES</option>
+      <option value="pt">🌐 PT</option>
+      <option value="de">🌐 DE</option>
+      <option value="it">🌐 IT</option>
+      <option value="ru">🌐 RU</option>
+      <option value="tr">🌐 TR</option>
+      <option value="hi">🌐 HI</option>
+      <option value="ur">🌐 UR</option>
+      <option value="id">🌐 ID</option>
+      <option value="vi">🌐 VI</option>
+      <option value="th">🌐 TH</option>
+      <option value="ja">🌐 JA</option>
+      <option value="ko">🌐 KO</option>
+      <option value="zh">🌐 ZH</option>
+      <option value="pl">🌐 PL</option>
+      <option value="nl">🌐 NL</option>
+      <option value="ro">🌐 RO</option>
+      <option value="uk">🌐 UK</option>
+      <option value="fa">🌐 FA</option>
+      <option value="bn">🌐 BN</option>
+      <option value="ms">🌐 MS</option>
+      <option value="tl">🌐 TL</option>
+    </select>
   </header>
 
   <!-- Main Container -->
@@ -307,7 +334,7 @@
           </span>
         </a>
 
-        <!-- CENTER MAIN VIDEO CARD (Uses your existing 1000454318.jpg) -->
+        <!-- CENTER MAIN VIDEO CARD -->
         <a
           href="https://jikgykm.com/cl/91a45d1408e00d1e?p1={click_id}&p2={campaign_id}&source=pushhouse&site={site_id}"
           class="video-card video-center offer-link"
@@ -367,24 +394,24 @@
     </section>
 
     <!-- ========================================================================
-         UNLOCK FREE TO WATCH CARD
+         BLUR GLASS UNLOCK WINDOW
          ======================================================================== -->
-    <section class="relative w-full glass-card rounded-3xl p-6 flex flex-col items-center text-center">
-      <div class="w-14 h-14 rounded-2xl bg-gradient-to-br from-red-600/40 to-rose-500/35 border border-red-400/55 flex items-center justify-center mb-3.5 shadow-[0_0_28px_rgba(255,23,68,0.55)] animate-pulse">
+    <section class="w-full blur-glass-card rounded-3xl p-6 flex flex-col items-center text-center">
+      <div class="relative z-10 w-14 h-14 rounded-2xl bg-gradient-to-br from-red-600/40 to-rose-500/30 border border-red-300/45 flex items-center justify-center mb-3.5 shadow-[0_0_28px_rgba(255,23,68,0.5)] animate-pulse">
         <svg class="w-7 h-7 text-rose-100" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
           <path stroke-linecap="round" stroke-linejoin="round" d="M16.5 10.5V6.75a4.5 4.5 0 10-9 0v3.75m-.75 11.25h10.5a2.25 2.25 0 002.25-2.25v-6.75a2.25 2.25 0 00-2.25-2.25H6.75a2.25 2.25 0 00-2.25 2.25v6.75a2.25 2.25 0 002.25 2.25z" />
         </svg>
       </div>
 
-      <span id="lock-badge" class="text-[11px] font-bold uppercase tracking-widest text-rose-200 bg-red-500/20 border border-red-400/40 px-3 py-0.5 rounded-full mb-2">
+      <span id="lock-badge" class="relative z-10 text-[11px] font-bold uppercase tracking-widest text-rose-100 bg-red-500/25 border border-red-300/35 px-3 py-0.5 rounded-full mb-2 backdrop-blur-sm">
         Free VIP Access • 18+
       </span>
 
-      <h2 id="lock-title" class="text-xl font-extrabold text-white mb-1.5">
+      <h2 id="lock-title" class="relative z-10 text-xl font-extrabold text-white mb-1.5">
         Ready to Watch Full Videos?
       </h2>
 
-      <p id="lock-desc" class="text-xs sm:text-sm text-rose-200/85 max-w-xs mb-5 leading-relaxed">
+      <p id="lock-desc" class="relative z-10 text-xs sm:text-sm text-rose-100/85 max-w-xs mb-5 leading-relaxed">
         Tap below to unlock all private 18+ videos in Full HD with instant free access.
       </p>
 
@@ -392,15 +419,15 @@
       <a
         id="offer-cta-link"
         href="https://jikgykm.com/cl/91a45d1408e00d1e?p1={click_id}&p2={campaign_id}&source=pushhouse&site={site_id}"
-        class="neon-cta-btn offer-link w-full max-w-xs py-4 px-6 rounded-2xl font-extrabold text-sm sm:text-base text-white flex items-center justify-center gap-2.5"
+        class="relative z-10 neon-cta-btn offer-link w-full max-w-xs py-4 px-6 rounded-2xl font-extrabold text-sm sm:text-base text-white flex items-center justify-center gap-2.5"
       >
-        <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+        <svg class="w-5 h-5 shrink-0" fill="currentColor" viewBox="0 0 24 24">
           <path d="M8 5v14l11-7z" />
         </svg>
         <span id="lock-cta-text">Unlock Free to Watch</span>
       </a>
 
-      <div id="trust-note" class="mt-3.5 flex items-center justify-center gap-2 text-[11px] font-medium text-rose-300/75">
+      <div class="relative z-10 mt-3.5 flex items-center justify-center gap-2 text-[11px] font-medium text-rose-200/80">
         <span class="w-1.5 h-1.5 rounded-full bg-emerald-400"></span>
         <span id="trust-text">100% Free • Instant Streaming • Private</span>
       </div>
@@ -410,7 +437,7 @@
 
   <script>
     /* ==========================================================================
-       1. LOCALIZATION (EN / AR)
+       1. WORLD LANGUAGES AUTO-TRANSLATION DICTIONARY
        ========================================================================== */
     const I18N = {
       en: {
@@ -434,23 +461,271 @@
         lockDesc: "اضغط فالأسفل لفتح جميع الفيديوهات الخاصة (+18) بجودة عالية ومجاناً.",
         lockCta: "افتح المشاهدة مجاناً",
         trustText: "مجاني 100% • تشغيل فوري • خصوصية تامة"
+      },
+      fr: {
+        dir: "ltr",
+        topBadge: "Vidéos Privées • 18+",
+        heroTitle: "Regarder Vidéos Privées (18+)",
+        heroSubtitle: "Vidéos HD exclusives sans censure prêtes à être visionnées.",
+        lockBadge: "Accès VIP Gratuit • 18+",
+        lockTitle: "Prêt à voir les vidéos complètes ?",
+        lockDesc: "Cliquez ci-dessous pour débloquer toutes les vidéos privées 18+ en Full HD gratuitement.",
+        lockCta: "Débloquer Gratuitement",
+        trustText: "100% Gratuit • Streaming Instantané • Privé"
+      },
+      es: {
+        dir: "ltr",
+        topBadge: "Videos Privados • 18+",
+        heroTitle: "Ver Videos Privados (18+)",
+        heroSubtitle: "Videos HD exclusivos sin censura listos para ver ahora.",
+        lockBadge: "Acceso VIP Gratis • 18+",
+        lockTitle: "¿Listo para ver los videos completos?",
+        lockDesc: "Toca abajo para desbloquear todos los videos privados 18+ en Full HD gratis.",
+        lockCta: "Desbloquear Gratis",
+        trustText: "100% Gratis • Reproducción Instantánea • Privado"
+      },
+      pt: {
+        dir: "ltr",
+        topBadge: "Vídeos Privados • 18+",
+        heroTitle: "Assistir Vídeos Privados (18+)",
+        heroSubtitle: "Vídeos HD exclusivos sem censura prontos para assistir agora.",
+        lockBadge: "Acesso VIP Grátis • 18+",
+        lockTitle: "Pronto para assistir aos vídeos completos?",
+        lockDesc: "Toque abaixo para desbloquear todos os vídeos privados 18+ em Full HD grátis.",
+        lockCta: "Desbloquear Grátis",
+        trustText: "100% Grátis • Streaming Instantâneo • Privado"
+      },
+      de: {
+        dir: "ltr",
+        topBadge: "Private Videos • 18+",
+        heroTitle: "Private Videos ansehen (18+)",
+        heroSubtitle: "Exklusive unzensierte HD-Videos sofort zum Streamen bereit.",
+        lockBadge: "Kostenloser VIP-Zugang • 18+",
+        lockTitle: "Bereit für die vollständigen Videos?",
+        lockDesc: "Tippe unten, um alle privaten 18+ Videos kostenlos in Full HD freizuschalten.",
+        lockCta: "Kostenlos Freischalten",
+        trustText: "100% Kostenlos • Sofort-Stream • Privat"
+      },
+      it: {
+        dir: "ltr",
+        topBadge: "Video Privati • 18+",
+        heroTitle: "Guarda Video Privati (18+)",
+        heroSubtitle: "Video HD esclusivi senza censura pronti per lo streaming.",
+        lockBadge: "Accesso VIP Gratis • 18+",
+        lockTitle: "Pronto a guardare i video completi?",
+        lockDesc: "Tocca qui sotto per sbloccare tutti i video privati 18+ in Full HD gratis.",
+        lockCta: "Sblocca Gratis Ora",
+        trustText: "100% Gratis • Streaming Istantaneo • Privato"
+      },
+      ru: {
+        dir: "ltr",
+        topBadge: "Приватные Видео • 18+",
+        heroTitle: "Смотреть Приватные Видео (18+)",
+        heroSubtitle: "Эксклюзивные HD видео без цензуры готовы к просмотру.",
+        lockBadge: "Бесплатный VIP Доступ • 18+",
+        lockTitle: "Готовы смотреть полные видео?",
+        lockDesc: "Нажмите ниже, чтобы бесплатно открыть все приватные видео 18+ в Full HD.",
+        lockCta: "Открыть Бесплатно",
+        trustText: "100% Бесплатно • Мгновенный Просмотр • Приватно"
+      },
+      tr: {
+        dir: "ltr",
+        topBadge: "Özel Videolar • 18+",
+        heroTitle: "Özel Videoları İzle (18+)",
+        heroSubtitle: "Sansürsüz özel HD videolar hemen izlemeye hazır.",
+        lockBadge: "Ücretsiz VIP Erişim • 18+",
+        lockTitle: "Tam Videoları İzlemeye Hazır mısın?",
+        lockDesc: "Tüm özel 18+ videoları Full HD ve ücretsiz açmak için aşağıya dokun.",
+        lockCta: "Ücretsiz İzlemek İçin Aç",
+        trustText: "%100 Ücretsiz • Anında İzle • Gizli"
+      },
+      hi: {
+        dir: "ltr",
+        topBadge: "प्राइवेट वीडियो • 18+",
+        heroTitle: "प्राइवेट वीडियो देखें (18+)",
+        heroSubtitle: "एक्सक्लूसिव HD वीडियो अभी देखने के लिए तैयार हैं।",
+        lockBadge: "फ्री VIP एक्सेस • 18+",
+        lockTitle: "पूरे वीडियो देखने के लिए तैयार हैं?",
+        lockDesc: "सभी प्राइवेट 18+ वीडियो को Full HD में फ्री अनलॉक करने के लिए नीचे टैप करें।",
+        lockCta: "फ्री में अनलॉक करें",
+        trustText: "100% फ्री • तुरंत स्ट्रीमिंग • प्राइवेट"
+      },
+      ur: {
+        dir: "rtl",
+        topBadge: "پرائیویٹ ویڈیوز • +18",
+        heroTitle: "پرائیویٹ ویڈیوز دیکھیں (+18)",
+        heroSubtitle: "خصوصی ایچ ڈی ویڈیوز ابھی دیکھنے کے لیے تیار ہیں۔",
+        lockBadge: "مفت وی آئی پی رسائی • +18",
+        lockTitle: "مکمل ویڈیوز دیکھنے کے لیے تیار ہیں؟",
+        lockDesc: "تمام پرائیویٹ +18 ویڈیوز کو فل ایچ ڈی میں مفت ان لاک کرنے کے لیے نیچے کلک کریں۔",
+        lockCta: "مفت دیکھنے کے لیے ان لاک کریں",
+        trustText: "100% مفت • فوری اسٹریمنگ • پرائیویٹ"
+      },
+      id: {
+        dir: "ltr",
+        topBadge: "Video Pribadi • 18+",
+        heroTitle: "Tonton Video Pribadi (18+)",
+        heroSubtitle: "Video HD eksklusif tanpa sensor siap ditonton sekarang.",
+        lockBadge: "Akses VIP Gratis • 18+",
+        lockTitle: "Siap Menonton Video Lengkap?",
+        lockDesc: "Ketuk di bawah untuk membuka semua video pribadi 18+ dalam Full HD gratis.",
+        lockCta: "Buka Gratis Untuk Menonton",
+        trustText: "100% Gratis • Streaming Instan • Pribadi"
+      },
+      vi: {
+        dir: "ltr",
+        topBadge: "Video Riêng Tư • 18+",
+        heroTitle: "Xem Video Riêng Tư (18+)",
+        heroSubtitle: "Video HD độc quyền không che sẵn sàng phát ngay bây giờ.",
+        lockBadge: "Truy Cập VIP Miễn Phí • 18+",
+        lockTitle: "Sẵn sàng xem video đầy đủ?",
+        lockDesc: "Nhấn bên dưới để mở khóa miễn phí tất cả video 18+ Full HD.",
+        lockCta: "Mở Khóa Xem Miễn Phí",
+        trustText: "100% Miễn Phí • Xem Ngay • Riêng Tư"
+      },
+      th: {
+        dir: "ltr",
+        topBadge: "วิดีโอส่วนตัว • 18+",
+        heroTitle: "ดูวิดีโอส่วนตัว (18+)",
+        heroSubtitle: "วิดีโอ HD สุดพิเศษไม่เซ็นเซอร์ พร้อมรับชมทันที",
+        lockBadge: "สิทธิ์ VIP ฟรี • 18+",
+        lockTitle: "พร้อมดูวิดีโอฉบับเต็มหรือยัง?",
+        lockDesc: "แตะด้านล่างเพื่อปลดล็อกวิดีโอส่วนตัว 18+ ระดับ Full HD ฟรีทันที",
+        lockCta: "ปลดล็อกเพื่อดูฟรี",
+        trustText: "ฟรี 100% • สตรีมทันที • ส่วนตัว"
+      },
+      ja: {
+        dir: "ltr",
+        topBadge: "プライベート動画 • 18+",
+        heroTitle: "プライベート動画を視聴 (18+)",
+        heroSubtitle: "限定HD無修正動画を今すぐストリーミング再生できます。",
+        lockBadge: "無料VIPアクセス • 18+",
+        lockTitle: "フル動画を視聴しますか？",
+        lockDesc: "下をタップして、すべての18+プライベート動画をフルHDで無料解除。",
+        lockCta: "無料でロック解除して視聴",
+        trustText: "100%無料 • 即時再生 • プライバシー保護"
+      },
+      ko: {
+        dir: "ltr",
+        topBadge: "프라이빗 영상 • 18+",
+        heroTitle: "프라이빗 영상 시청 (18+)",
+        heroSubtitle: "독점 무삭제 HD 영상을 지금 바로 스트리밍하세요.",
+        lockBadge: "무료 VIP 액세스 • 18+",
+        lockTitle: "전체 영상을 시청하시겠습니까?",
+        lockDesc: "아래를 눌러 모든 18+ 프라이빗 영상을 Full HD로 무료 잠금 해제하세요.",
+        lockCta: "무료 잠금 해제 및 시청",
+        trustText: "100% 무료 • 즉시 재생 • 완벽 보안"
+      },
+      zh: {
+        dir: "ltr",
+        topBadge: "私密视频 • 18+",
+        heroTitle: "观看私密视频 (18+)",
+        heroSubtitle: "独家高清无删减视频，立即在线播放。",
+        lockBadge: "免费VIP通道 • 18+",
+        lockTitle: "准备好观看完整视频了吗？",
+        lockDesc: "点击下方立即免费解锁所有高清18+私密视频。",
+        lockCta: "免费解锁观看",
+        trustText: "100%免费 • 即刻播放 • 隐私保护"
+      },
+      pl: {
+        dir: "ltr",
+        topBadge: "Prywatne Wideo • 18+",
+        heroTitle: "Oglądaj Prywatne Wideo (18+)",
+        heroSubtitle: "Ekskluzywne filmy HD bez cenzury gotowe do obejrzenia.",
+        lockBadge: "Darmowy Dostęp VIP • 18+",
+        lockTitle: "Gotowy na pełne filmy?",
+        lockDesc: "Kliknij poniżej, aby za darmo odblokować wszystkie filmy 18+ w Full HD.",
+        lockCta: "Odblokuj Za Darmo",
+        trustText: "100% Za Darmo • Natychmiastowy Stream • Prywatne"
+      },
+      nl: {
+        dir: "ltr",
+        topBadge: "Privévideo's • 18+",
+        heroTitle: "Bekijk Privévideo's (18+)",
+        heroSubtitle: "Exclusieve ongecensureerde HD-video's klaar om te streamen.",
+        lockBadge: "Gratis VIP-Toegang • 18+",
+        lockTitle: "Klaar om de volledige video's te zien?",
+        lockDesc: "Tik hieronder om alle privé 18+ video's gratis in Full HD te ontgrendelen.",
+        lockCta: "Gratis Ontgrendelen",
+        trustText: "100% Gratis • Direct Streamen • Privé"
+      },
+      ro: {
+        dir: "ltr",
+        topBadge: "Video Private • 18+",
+        heroTitle: "Urmărește Video Private (18+)",
+        heroSubtitle: "Videoclipuri HD exclusive necenzurate gata de vizionare.",
+        lockBadge: "Acces VIP Gratuit • 18+",
+        lockTitle: "Gata să vezi videoclipurile complete?",
+        lockDesc: "Apasă mai jos pentru a debloca gratuit toate videoclipurile 18+ în Full HD.",
+        lockCta: "Deblochează Gratuit",
+        trustText: "100% Gratuit • Streaming Instant • Privat"
+      },
+      uk: {
+        dir: "ltr",
+        topBadge: "Приватні Відео • 18+",
+        heroTitle: "Дивитись Приватні Відео (18+)",
+        heroSubtitle: "Ексклюзивні HD відео без цензури готові до перегляду.",
+        lockBadge: "Безкоштовний VIP Доступ • 18+",
+        lockTitle: "Готові дивитись повні відео?",
+        lockDesc: "Натисніть нижче, щоб безкоштовно відкрити всі приватні відео 18+ у Full HD.",
+        lockCta: "Відкрити Безкоштовно",
+        trustText: "100% Безкоштовно • Миттєвий Перегляд • Приватно"
+      },
+      fa: {
+        dir: "rtl",
+        topBadge: "ویدیوهای خصوصی • +18",
+        heroTitle: "تماشای ویدیوهای خصوصی (+18)",
+        heroSubtitle: "ویدیوهای اختصاصی HD بدون سانسور آماده پخش.",
+        lockBadge: "دسترسی رایگان VIP • +18",
+        lockTitle: "آماده تماشای ویدیوهای کامل هستید؟",
+        lockDesc: "برای باز کردن رایگان تمام ویدیوهای خصوصی +18 با کیفیت Full HD کلیک کنید.",
+        lockCta: "باز کردن رایگان برای تماشا",
+        trustText: "100% رایگان • پخش فوری • کاملاً خصوصی"
+      },
+      bn: {
+        dir: "ltr",
+        topBadge: "প্রাইভেট ভিডিও • 18+",
+        heroTitle: "প্রাইভেট ভিডিও দেখুন (18+)",
+        heroSubtitle: "এক্সক্লুসিভ HD ভিডিও এখনই দেখার জন্য প্রস্তুত।",
+        lockBadge: "ফ্রি VIP অ্যাক্সেস • 18+",
+        lockTitle: "সম্পূর্ণ ভিডিও দেখতে প্রস্তুত?",
+        lockDesc: "সব প্রাইভেট 18+ ভিডিও Full HD-তে ফ্রিতে আনলক করতে নিচে ট্যাপ করুন।",
+        lockCta: "ফ্রিতে আনলক করুন",
+        trustText: "100% ফ্রি • তাৎক্ষণিক স্ট্রিমিং • প্রাইভেট"
+      },
+      ms: {
+        dir: "ltr",
+        topBadge: "Video Peribadi • 18+",
+        heroTitle: "Tonton Video Peribadi (18+)",
+        heroSubtitle: "Video HD eksklusif sedia untuk ditonton sekarang.",
+        lockBadge: "Akses VIP Percuma • 18+",
+        lockTitle: "Sedia Tonton Video Penuh?",
+        lockDesc: "Ketik di bawah untuk buka semua video peribadi 18+ dalam Full HD percuma.",
+        lockCta: "Buka Percuma Untuk Tonton",
+        trustText: "100% Percuma • Strim Segera • Peribadi"
+      },
+      tl: {
+        dir: "ltr",
+        topBadge: "Pribadong Video • 18+",
+        heroTitle: "Manood ng Pribadong Video (18+)",
+        heroSubtitle: "Eksklusibong HD video na handang i-stream ngayon.",
+        lockBadge: "Libreng VIP Access • 18+",
+        lockTitle: "Handa nang manood ng buong video?",
+        lockDesc: "I-tap sa ibaba upang ma-unlock nang libre ang lahat ng 18+ video sa Full HD.",
+        lockCta: "I-unlock nang Libre",
+        trustText: "100% Libre • Instant Streaming • Pribado"
       }
     };
 
     function setLanguage(lang) {
-      const t = I18N[lang];
-      document.documentElement.lang = lang;
+      const code = I18N[lang] ? lang : "en";
+      const t = I18N[code];
+
+      document.documentElement.lang = code;
       document.documentElement.dir = t.dir;
 
-      const btnEn = document.getElementById("btn-lang-en");
-      const btnAr = document.getElementById("btn-lang-ar");
-      if (lang === "en") {
-        btnEn.className = "px-2.5 py-1 text-xs font-semibold rounded-full transition-all bg-red-600 text-white shadow-sm cursor-pointer";
-        btnAr.className = "px-2.5 py-1 text-xs font-semibold rounded-full transition-all text-rose-200/75 hover:text-white cursor-pointer";
-      } else {
-        btnAr.className = "px-2.5 py-1 text-xs font-semibold rounded-full transition-all bg-red-600 text-white shadow-sm cursor-pointer";
-        btnEn.className = "px-2.5 py-1 text-xs font-semibold rounded-full transition-all text-rose-200/75 hover:text-white cursor-pointer";
-      }
+      const selector = document.getElementById("lang-selector");
+      if (selector) selector.value = code;
 
       document.getElementById("badge-top-text").textContent = t.topBadge;
       document.getElementById("hero-title").textContent = t.heroTitle;
@@ -460,6 +735,18 @@
       document.getElementById("lock-desc").textContent = t.lockDesc;
       document.getElementById("lock-cta-text").textContent = t.lockCta;
       document.getElementById("trust-text").textContent = t.trustText;
+    }
+
+    function detectVisitorLanguage() {
+      const langs = navigator.languages && navigator.languages.length
+        ? navigator.languages
+        : [navigator.language || "en"];
+
+      for (const l of langs) {
+        const shortCode = l.toLowerCase().split("-")[0];
+        if (I18N[shortCode]) return shortCode;
+      }
+      return "en";
     }
 
     /* ==========================================================================
@@ -478,14 +765,14 @@
       function resize() {
         width = canvas.width = window.innerWidth;
         height = canvas.height = window.innerHeight;
-        const count = Math.min(48, Math.floor((width * height) / 22000));
+        const count = Math.min(52, Math.floor((width * height) / 20000));
         particles = Array.from({ length: count }, () => ({
           x: Math.random() * width,
           y: Math.random() * height,
-          r: Math.random() * 2.2 + 0.8,
-          vy: -(Math.random() * 0.38 + 0.14),
+          r: Math.random() * 2.4 + 0.9,
+          vy: -(Math.random() * 0.4 + 0.14),
           vx: (Math.random() - 0.5) * 0.25,
-          alpha: Math.random() * 0.65 + 0.2,
+          alpha: Math.random() * 0.7 + 0.2,
           color: Math.random() > 0.45 ? "#ff1744" : "#f43f5e"
         }));
       }
@@ -526,21 +813,18 @@
         ctx.clearRect(0, 0, width, height);
         time += 0.014;
 
-        // Flowing Red & Crimson Neon Waves
-        drawWave(height * 0.68, 36, 0.0032, 0.9, "rgba(255, 23, 68, 0.24)", 0.72);
-        drawWave(height * 0.78, 28, 0.0045, -1.1, "rgba(220, 38, 38, 0.18)", 0.62);
+        drawWave(height * 0.65, 38, 0.0032, 0.9, "rgba(255, 23, 68, 0.28)", 0.75);
+        drawWave(height * 0.76, 30, 0.0045, -1.1, "rgba(220, 38, 38, 0.22)", 0.65);
 
-        // Cursor / Touch Red Spotlight
         if (pointer.active) {
-          const glow = ctx.createRadialGradient(pointer.x, pointer.y, 0, pointer.x, pointer.y, 175);
-          glow.addColorStop(0, "rgba(255, 23, 68, 0.22)");
-          glow.addColorStop(0.5, "rgba(220, 38, 38, 0.08)");
+          const glow = ctx.createRadialGradient(pointer.x, pointer.y, 0, pointer.x, pointer.y, 180);
+          glow.addColorStop(0, "rgba(255, 23, 68, 0.24)");
+          glow.addColorStop(0.5, "rgba(220, 38, 38, 0.09)");
           glow.addColorStop(1, "rgba(13, 2, 5, 0)");
           ctx.fillStyle = glow;
           ctx.fillRect(0, 0, width, height);
         }
 
-        // Floating Red Neon Sparkles
         for (const p of particles) {
           p.y += p.vy;
           p.x += p.vx;
@@ -569,7 +853,8 @@
       resize();
     })();
 
-    setLanguage("en");
+    // Auto-apply visitor's browser language on load
+    setLanguage(detectVisitorLanguage());
   </script>
 </body>
 </html>
