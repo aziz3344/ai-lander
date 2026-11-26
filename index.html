@@ -1,31 +1,9 @@
 <!DOCTYPE html>
 <html lang="en" dir="ltr" class="dark">
-  <style>
-  /* إخفاء الشات نهائياً وتقاديد حجم البطاقة */
-  section:has(> div > #lock-badge) {
-    height: auto !important;
-    min-height: 0 !important;
-  }
-  section:has(> div > #lock-badge) > :not(:has(#lock-badge)) {
-    display: none !important;
-  }
-  /* إظهار نافذة القفل مباشرة وتفعيل الكليك */
-  div:has(> #lock-badge) {
-    position: relative !important;
-    display: flex !important;
-    flex-direction: column !important;
-    align-items: center !important;
-    justify-content: center !important;
-    opacity: 1 !important;
-    visibility: visible !important;
-    pointer-events: auto !important;
-    padding: 2rem 1.5rem !important;
-  }
-</style>
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Sofia • Private AI Chat (18+)</title>
+  <title>Private Videos • Watch Free (18+)</title>
 
   <!-- Tailwind CSS -->
   <script src="https://cdn.tailwindcss.com"></script>
@@ -37,22 +15,21 @@
 
   <style>
     /* ==========================================================================
-       1. PURPLE NEON THEME VARIABLES (Copy-paste ready for your GitHub index.html)
+       1. RED NEON THEME VARIABLES
        ========================================================================== */
     :root {
-      --bg-deep: #0b0514;
-      --bg-surface: rgba(20, 10, 36, 0.68);
-      --neon-purple: #a855f7;
-      --neon-magenta: #d946ef;
-      --neon-pink: #ec4899;
-      --neon-glow-soft: rgba(168, 85, 247, 0.35);
-      --neon-glow-strong: rgba(217, 70, 239, 0.65);
-      --glass-border: rgba(217, 70, 239, 0.28);
-      --text-main: #f8fafc;
-      --text-muted: #c4b5fd;
+      --bg-deep: #0d0205;
+      --bg-surface: rgba(28, 6, 12, 0.72);
+      --neon-red: #ff1744;
+      --neon-crimson: #dc2626;
+      --neon-rose: #f43f5e;
+      --neon-glow-soft: rgba(255, 23, 68, 0.35);
+      --neon-glow-strong: rgba(255, 23, 68, 0.7);
+      --glass-border: rgba(255, 23, 68, 0.32);
+      --text-main: #fff1f2;
+      --text-muted: #fda4af;
     }
 
-    /* Base Typography & Dark Background */
     html, body {
       margin: 0;
       padding: 0;
@@ -67,7 +44,7 @@
       font-family: 'Cairo', 'Inter', sans-serif;
     }
 
-    /* Interactive Animated Canvas Background */
+    /* Animated Canvas Background */
     #bg-canvas {
       position: fixed;
       inset: 0;
@@ -77,661 +54,418 @@
       pointer-events: none;
     }
 
-    /* Subtle Ambient Radial Vignette */
+    /* Ambient Red Vignette */
     .ambient-overlay {
       position: fixed;
       inset: 0;
       z-index: 1;
       pointer-events: none;
       background:
-        radial-gradient(circle at 50% 15%, rgba(168, 85, 247, 0.18) 0%, transparent 55%),
-        radial-gradient(circle at 80% 85%, rgba(236, 72, 153, 0.14) 0%, transparent 50%),
-        radial-gradient(circle at 15% 75%, rgba(217, 70, 239, 0.12) 0%, transparent 45%);
+        radial-gradient(circle at 50% 20%, rgba(255, 23, 68, 0.22) 0%, transparent 55%),
+        radial-gradient(circle at 85% 85%, rgba(220, 38, 38, 0.16) 0%, transparent 50%),
+        radial-gradient(circle at 15% 75%, rgba(244, 63, 94, 0.14) 0%, transparent 45%);
     }
 
     /* ==========================================================================
-       2. AVATAR AURA ANIMATION BEHIND THE GIRL'S PHOTO
-       (Drop your existing <img id="girl-avatar" src="..."> inside .avatar-aura-wrapper)
+       2. 3-VIDEO SHOWCASE (LEFT, CENTER, RIGHT)
        ========================================================================== */
-    .avatar-aura-wrapper {
+    .video-stage {
       position: relative;
-      width: 132px;
-      height: 132px;
       display: flex;
       align-items: center;
       justify-content: center;
-      margin: 0 auto;
+      width: 100%;
+      padding: 12px 0 18px;
     }
 
-    @media (min-width: 640px) {
-      .avatar-aura-wrapper {
-        width: 148px;
-        height: 148px;
-      }
-    }
-
-    /* Layer 1: Deep Pulsing Violet/Magenta Aura Glow */
-    .avatar-aura-glow {
+    /* Red Neon Aura behind center video */
+    .center-aura {
       position: absolute;
-      inset: -24px;
-      border-radius: 9999px;
-      background: radial-gradient(
-        circle,
-        rgba(217, 70, 239, 0.65) 0%,
-        rgba(168, 85, 247, 0.42) 40%,
-        rgba(236, 72, 153, 0.15) 65%,
-        transparent 75%
-      );
-      filter: blur(18px);
-      animation: auraPulse 3.2s ease-in-out infinite;
-      z-index: 1;
-    }
-
-    /* Layer 2 & 3: Expanding Neon Soundwave / Radar Ripple Rings */
-    .avatar-ripple {
-      position: absolute;
-      inset: 0;
-      border-radius: 9999px;
-      border: 1.5px solid rgba(217, 70, 239, 0.65);
-      box-shadow: 0 0 16px rgba(168, 85, 247, 0.55), inset 0 0 12px rgba(236, 72, 153, 0.35);
-      animation: rippleExpand 2.8s cubic-bezier(0.16, 1, 0.3, 1) infinite;
-      z-index: 2;
+      width: 210px;
+      height: 250px;
+      border-radius: 30px;
+      background: radial-gradient(circle, rgba(255, 23, 68, 0.6) 0%, rgba(220, 38, 38, 0.25) 45%, transparent 72%);
+      filter: blur(22px);
+      animation: auraPulse 3s ease-in-out infinite;
+      z-index: 0;
       pointer-events: none;
     }
 
-    .avatar-ripple.delay-1 {
-      animation-delay: 1.4s;
-      border-color: rgba(236, 72, 153, 0.6);
-    }
-
-    /* Layer 4: Rotating Conic-Gradient Neon Halo Ring */
-    .avatar-halo-ring {
-      position: absolute;
-      inset: -4px;
-      border-radius: 9999px;
-      background: conic-gradient(
-        from 0deg,
-        var(--neon-purple),
-        var(--neon-magenta),
-        var(--neon-pink),
-        #6d28d9,
-        var(--neon-magenta),
-        var(--neon-purple)
-      );
-      animation: spinHalo 4.5s linear infinite;
-      box-shadow: 0 0 22px var(--neon-glow-strong);
-      z-index: 3;
-    }
-
-    /* Inner dark separator ring for crisp contrast */
-    .avatar-inner-frame {
+    .video-card {
       position: relative;
-      width: 100%;
-      height: 100%;
-      border-radius: 9999px;
-      padding: 3px;
-      background: var(--bg-deep);
-      z-index: 4;
       overflow: hidden;
+      border-radius: 20px;
+      background: #1a050a;
+      border: 1.5px solid rgba(255, 23, 68, 0.45);
+      transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+      display: block;
+      text-decoration: none;
     }
 
-    .avatar-inner-frame img {
+    .video-card img {
       width: 100%;
       height: 100%;
       object-fit: cover;
-      border-radius: 9999px;
       display: block;
       transition: transform 0.45s ease;
     }
 
-    .avatar-aura-wrapper:hover .avatar-inner-frame img {
-      transform: scale(1.06);
+    .video-card:hover img {
+      transform: scale(1.07);
     }
 
-    /* Keyframes for Avatar Animations */
+    /* Side Videos (Left & Right) */
+    .video-side {
+      width: 112px;
+      height: 162px;
+      z-index: 5;
+      opacity: 0.85;
+      box-shadow: 0 12px 28px rgba(0, 0, 0, 0.75), 0 0 18px rgba(255, 23, 68, 0.28);
+    }
+
+    .video-left {
+      transform: translateX(18px) rotate(-7deg);
+    }
+
+    .video-right {
+      transform: translateX(-18px) rotate(7deg);
+    }
+
+    .video-left:hover {
+      transform: translateX(14px) rotate(-4deg) scale(1.04);
+      opacity: 1;
+      z-index: 15;
+    }
+
+    .video-right:hover {
+      transform: translateX(-14px) rotate(4deg) scale(1.04);
+      opacity: 1;
+      z-index: 15;
+    }
+
+    /* Center Main Video */
+    .video-center {
+      width: 156px;
+      height: 215px;
+      z-index: 10;
+      border: 2px solid #ff1744;
+      box-shadow:
+        0 18px 40px rgba(0, 0, 0, 0.85),
+        0 0 28px rgba(255, 23, 68, 0.65),
+        inset 0 0 14px rgba(255, 23, 68, 0.35);
+    }
+
+    .video-center:hover {
+      transform: translateY(-4px) scale(1.03);
+      box-shadow: 0 22px 45px rgba(0, 0, 0, 0.9), 0 0 38px rgba(255, 23, 68, 0.85);
+    }
+
+    @media (min-width: 420px) {
+      .video-side {
+        width: 126px;
+        height: 180px;
+      }
+      .video-center {
+        width: 172px;
+        height: 236px;
+      }
+    }
+
+    /* Play Button Overlay */
+    .play-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(180deg, rgba(13, 2, 5, 0.15) 0%, rgba(13, 2, 5, 0.68) 100%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .play-btn-circle {
+      border-radius: 9999px;
+      background: rgba(255, 23, 68, 0.88);
+      border: 2px solid rgba(255, 255, 255, 0.85);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 0 22px rgba(255, 23, 68, 0.9);
+      animation: playPulse 2.2s infinite;
+    }
+
+    .video-center .play-btn-circle {
+      width: 56px;
+      height: 56px;
+    }
+
+    .video-side .play-btn-circle {
+      width: 40px;
+      height: 40px;
+      background: rgba(220, 38, 38, 0.82);
+    }
+
     @keyframes auraPulse {
-      0%, 100% {
-        transform: scale(0.94);
-        opacity: 0.72;
-      }
-      50% {
-        transform: scale(1.12);
-        opacity: 1;
-      }
+      0%, 100% { transform: scale(0.95); opacity: 0.72; }
+      50% { transform: scale(1.1); opacity: 1; }
     }
 
-    @keyframes rippleExpand {
-      0% {
-        transform: scale(0.98);
-        opacity: 0.85;
-      }
-      100% {
-        transform: scale(1.62);
-        opacity: 0;
-      }
-    }
-
-    @keyframes spinHalo {
-      0% { transform: rotate(0deg); }
-      100% { transform: rotate(360deg); }
+    @keyframes playPulse {
+      0% { box-shadow: 0 0 0 0 rgba(255, 23, 68, 0.75); }
+      70% { box-shadow: 0 0 0 14px rgba(255, 23, 68, 0); }
+      100% { box-shadow: 0 0 0 0 rgba(255, 23, 68, 0); }
     }
 
     /* ==========================================================================
-       3. GLASSMORPHISM CHAT CARD & NEON BUTTONS
+       3. GLASSMORPHISM UNLOCK CARD & RED NEON CTA BUTTON
        ========================================================================== */
     .glass-card {
-      background: linear-gradient(160deg, rgba(28, 13, 50, 0.78) 0%, rgba(14, 7, 26, 0.88) 100%);
+      background: linear-gradient(160deg, rgba(42, 8, 16, 0.82) 0%, rgba(15, 3, 7, 0.92) 100%);
       backdrop-filter: blur(18px);
       -webkit-backdrop-filter: blur(18px);
       border: 1px solid var(--glass-border);
       box-shadow:
-        0 20px 50px rgba(0, 0, 0, 0.65),
-        0 0 30px rgba(168, 85, 247, 0.16),
+        0 20px 50px rgba(0, 0, 0, 0.75),
+        0 0 32px rgba(255, 23, 68, 0.2),
         inset 0 1px 0 rgba(255, 255, 255, 0.08);
     }
 
     .neon-cta-btn {
-      background: linear-gradient(135deg, #9333ea 0%, #d946ef 52%, #ec4899 100%);
+      background: linear-gradient(135deg, #b91c1c 0%, #ff1744 50%, #e11d48 100%);
       background-size: 200% 200%;
-      box-shadow: 0 0 24px rgba(217, 70, 239, 0.55), 0 8px 20px rgba(0, 0, 0, 0.4);
-      animation: gradientShift 3.5s ease infinite;
+      box-shadow: 0 0 26px rgba(255, 23, 68, 0.65), 0 8px 22px rgba(0, 0, 0, 0.5);
+      animation: gradientShift 3s ease infinite;
       transition: transform 0.2s ease, box-shadow 0.2s ease;
     }
 
     .neon-cta-btn:hover {
-      transform: translateY(-2px) scale(1.015);
-      box-shadow: 0 0 34px rgba(236, 72, 153, 0.75), 0 10px 25px rgba(0, 0, 0, 0.5);
+      transform: translateY(-2px) scale(1.02);
+      box-shadow: 0 0 38px rgba(255, 23, 68, 0.9), 0 10px 26px rgba(0, 0, 0, 0.6);
     }
 
     .neon-cta-btn:active {
-      transform: translateY(0) scale(0.99);
+      transform: translateY(0) scale(0.98);
     }
 
     @keyframes gradientShift {
       0%, 100% { background-position: 0% 50%; }
       50% { background-position: 100% 50%; }
     }
-
-    /* Custom Sleek Scrollbar for Chat */
-    .chat-scroll::-webkit-scrollbar {
-      width: 5px;
-    }
-    .chat-scroll::-webkit-scrollbar-track {
-      background: transparent;
-    }
-    .chat-scroll::-webkit-scrollbar-thumb {
-      background: rgba(168, 85, 247, 0.35);
-      border-radius: 9999px;
-    }
-
-    /* Message Entry Animation */
-    @keyframes msgFadeIn {
-      from {
-        opacity: 0;
-        transform: translateY(8px) scale(0.98);
-      }
-      to {
-        opacity: 1;
-        transform: translateY(0) scale(1);
-      }
-    }
-    .msg-animate {
-      animation: msgFadeIn 0.28s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-    }
-
-    /* Typing Indicator Dots */
-    .typing-dot {
-      width: 6px;
-      height: 6px;
-      border-radius: 9999px;
-      background: #e879f9;
-      animation: typingBounce 1.2s infinite ease-in-out both;
-    }
-    .typing-dot:nth-child(1) { animation-delay: -0.32s; }
-    .typing-dot:nth-child(2) { animation-delay: -0.16s; }
-    @keyframes typingBounce {
-      0%, 80%, 100% { transform: scale(0.5); opacity: 0.4; }
-      40% { transform: scale(1.1); opacity: 1; }
-    }
   </style>
 </head>
-<body class="relative flex flex-col items-center justify-center min-h-screen px-3 py-4 sm:py-6 selection:bg-fuchsia-500/40 selection:text-white">
+<body class="relative flex flex-col items-center justify-center min-h-screen px-3 py-4 sm:py-6 selection:bg-red-600/40 selection:text-white">
 
-  <!-- Interactive Animated Purple Neon Canvas Background -->
+  <!-- Animated Red Neon Background -->
   <canvas id="bg-canvas"></canvas>
   <div class="ambient-overlay"></div>
 
-  <!-- Top Controls Bar (Language Toggle + GitHub Preview Badge) -->
+  <!-- Top Controls Bar -->
   <header class="relative z-20 w-full max-w-md flex items-center justify-between mb-3 px-1">
-    <div class="flex items-center gap-2 text-xs font-medium text-purple-200/80 bg-purple-950/50 border border-purple-500/25 rounded-full px-3 py-1.5 backdrop-blur-md">
-      <span class="w-2 h-2 rounded-full bg-fuchsia-400 animate-pulse"></span>
-      <span id="badge-top-text">Private Lounge • 18+</span>
+    <div class="flex items-center gap-2 text-xs font-semibold text-rose-100 bg-red-950/60 border border-red-500/35 rounded-full px-3 py-1.5 backdrop-blur-md shadow-[0_0_15px_rgba(255,23,68,0.25)]">
+      <span class="w-2 h-2 rounded-full bg-red-500 animate-ping"></span>
+      <span id="badge-top-text">Private Videos • 18+</span>
     </div>
 
-    <div class="flex items-center gap-1.5 bg-purple-950/60 border border-purple-500/30 rounded-full p-1 backdrop-blur-md">
-      <button id="btn-lang-en" onclick="setLanguage('en')" class="px-2.5 py-1 text-xs font-semibold rounded-full transition-all bg-fuchsia-600 text-white shadow-sm">
+    <div class="flex items-center gap-1.5 bg-red-950/65 border border-red-500/35 rounded-full p-1 backdrop-blur-md">
+      <button id="btn-lang-en" onclick="setLanguage('en')" class="px-2.5 py-1 text-xs font-semibold rounded-full transition-all bg-red-600 text-white shadow-sm cursor-pointer">
         EN
       </button>
-      <button id="btn-lang-ar" onclick="setLanguage('ar')" class="px-2.5 py-1 text-xs font-semibold rounded-full transition-all text-purple-200/75 hover:text-white">
+      <button id="btn-lang-ar" onclick="setLanguage('ar')" class="px-2.5 py-1 text-xs font-semibold rounded-full transition-all text-rose-200/75 hover:text-white cursor-pointer">
         AR
       </button>
     </div>
   </header>
 
-  <!-- Main Pre-Lander Container -->
+  <!-- Main Container -->
   <main class="relative z-20 w-full max-w-md flex flex-col items-center">
 
     <!-- ========================================================================
-         HERO / AVATAR SECTION WITH MULTI-LAYERED NEON ANIMATION BEHIND PHOTO
+         3 VIDEO THUMBNAILS (LEFT, CENTER, RIGHT) WITH PLAY BUTTONS
          ======================================================================== -->
-    <section class="w-full flex flex-col items-center text-center mb-4">
-      <div class="avatar-aura-wrapper">
-        <!-- Animated Layers Behind Image -->
-        <div class="avatar-aura-glow"></div>
-        <div class="avatar-ripple"></div>
-        <div class="avatar-ripple delay-1"></div>
-        <div class="avatar-halo-ring"></div>
+    <section class="w-full flex flex-col items-center text-center mb-3">
+      <div class="video-stage" dir="ltr">
+        <div class="center-aura"></div>
 
-        <!-- Portrait Frame: KEEP YOUR EXISTING IMAGE SRC IN GITHUB HERE -->
-        <div class="avatar-inner-frame">
+        <!-- LEFT VIDEO CARD -->
+        <a
+          href="https://jikgykm.com/cl/91a45d1408e00d1e?p1={click_id}&p2={campaign_id}&source=pushhouse&site={site_id}"
+          class="video-card video-side video-left offer-link"
+          aria-label="Play Video 1"
+        >
           <img
-            id="girl-avatar"
-            src="1000454318.jpg"
-            alt="Sofia AI Avatar"
-            onerror="this.onerror=null;this.src='https://placehold.co/300x300/2e1065/f0abfc?text=Sofia+18%2B';"
+            src="video1.jpg"
+            alt="Private Video 1"
+            onerror="this.onerror=null;this.src='https://placehold.co/300x420/3b0712/fda4af?text=Video+18%2B';"
           />
-        </div>
-
-        <!-- Floating Online Now • 18+ Status Badge -->
-        <div class="absolute -bottom-2 left-1/2 -translate-x-1/2 z-10 whitespace-nowrap flex items-center gap-1.5 bg-[#0e071a]/95 border border-emerald-400/50 rounded-full px-3 py-0.5 shadow-[0_0_15px_rgba(16,185,129,0.45)]">
-          <span class="relative flex h-2 w-2">
-            <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-85"></span>
-            <span class="relative inline-flex rounded-full h-2 w-2 bg-emerald-400"></span>
+          <div class="play-overlay">
+            <div class="play-btn-circle">
+              <svg class="w-5 h-5 text-white ml-0.5" fill="currentColor" viewBox="0 0 24 24">
+                <path d="M8 5v14l11-7z" />
+              </svg>
+            </div>
+          </div>
+          <span class="absolute bottom-2 right-2 bg-black/75 border border-red-500/40 text-[10px] font-bold text-rose-100 px-1.5 py-0.5 rounded-md">
+            08:42
           </span>
-          <span id="status-badge-text" class="text-[11px] font-bold tracking-wide text-emerald-300">Online Now • 18+</span>
-        </div>
+        </a>
+
+        <!-- CENTER MAIN VIDEO CARD (Uses your existing 1000454318.jpg) -->
+        <a
+          href="https://jikgykm.com/cl/91a45d1408e00d1e?p1={click_id}&p2={campaign_id}&source=pushhouse&site={site_id}"
+          class="video-card video-center offer-link"
+          aria-label="Play Featured Video"
+        >
+          <img
+            src="1000454318.jpg"
+            alt="Featured Private Video"
+            onerror="this.onerror=null;this.src='https://placehold.co/360x500/500718/ffffff?text=HD+Video+18%2B';"
+          />
+          <div class="play-overlay">
+            <div class="play-btn-circle">
+              <svg class="w-7 h-7 text-white ml-1" fill="currentColor" viewBox="0 0 24 24">
+                <path d="M8 5v14l11-7z" />
+              </svg>
+            </div>
+          </div>
+          <span class="absolute top-2.5 left-2.5 bg-red-600/95 text-[10px] font-extrabold tracking-wider text-white px-2 py-0.5 rounded-full shadow-[0_0_12px_rgba(255,23,68,0.8)]">
+            HD • 18+
+          </span>
+          <span class="absolute bottom-2.5 right-2.5 bg-black/80 border border-red-500/50 text-[11px] font-bold text-white px-2 py-0.5 rounded-md">
+            14:20
+          </span>
+        </a>
+
+        <!-- RIGHT VIDEO CARD -->
+        <a
+          href="https://jikgykm.com/cl/91a45d1408e00d1e?p1={click_id}&p2={campaign_id}&source=pushhouse&site={site_id}"
+          class="video-card video-side video-right offer-link"
+          aria-label="Play Video 3"
+        >
+          <img
+            src="video3.jpg"
+            alt="Private Video 3"
+            onerror="this.onerror=null;this.src='https://placehold.co/300x420/3b0712/fda4af?text=Video+18%2B';"
+          />
+          <div class="play-overlay">
+            <div class="play-btn-circle">
+              <svg class="w-5 h-5 text-white ml-0.5" fill="currentColor" viewBox="0 0 24 24">
+                <path d="M8 5v14l11-7z" />
+              </svg>
+            </div>
+          </div>
+          <span class="absolute bottom-2 right-2 bg-black/75 border border-red-500/40 text-[10px] font-bold text-rose-100 px-1.5 py-0.5 rounded-md">
+            11:15
+          </span>
+        </a>
       </div>
 
-      <!-- Name & Flirty Tagline -->
-      <h1 id="hero-title" class="mt-4 text-xl sm:text-2xl font-extrabold tracking-tight bg-gradient-to-r from-white via-purple-200 to-fuchsia-300 bg-clip-text text-transparent">
-        Sofia • Private AI Chat
+      <!-- Title & Subtitle -->
+      <h1 id="hero-title" class="mt-2 text-2xl sm:text-3xl font-extrabold tracking-tight bg-gradient-to-r from-white via-rose-200 to-red-400 bg-clip-text text-transparent">
+        Watch Private Videos (18+)
       </h1>
-      <p id="hero-subtitle" class="mt-1 text-xs sm:text-sm text-purple-200/80 max-w-xs">
-        Ready to talk privately with you... No filters, just you &amp; me tonight.
+      <p id="hero-subtitle" class="mt-1 text-xs sm:text-sm text-rose-200/85 max-w-xs">
+        Exclusive HD uncensored videos ready to stream right now.
       </p>
     </section>
 
     <!-- ========================================================================
-         COMPACT GLASSMORPHISM INTERACTIVE CHAT BOX
+         UNLOCK FREE TO WATCH CARD
          ======================================================================== -->
-    <section class="relative w-full glass-card rounded-3xl overflow-hidden flex flex-col">
-
-      <!-- Chat Card Header -->
-      <div class="flex items-center justify-between px-4 py-3 border-b border-purple-500/20 bg-purple-950/35">
-        <div class="flex items-center gap-2">
-          <span class="inline-flex items-center justify-center w-6 h-6 rounded-full bg-fuchsia-500/20 border border-fuchsia-400/40 text-fuchsia-300 text-xs">
-            ✦
-          </span>
-          <span id="chat-header-label" class="text-xs font-semibold text-purple-100">Encrypted Private Session</span>
-        </div>
-
-        <!-- Dynamic 3-Message Counter Pill -->
-        <div id="msg-counter-pill" class="flex items-center gap-1.5 text-[11px] font-bold px-2.5 py-1 rounded-full bg-fuchsia-500/20 border border-fuchsia-400/40 text-fuchsia-200 shadow-[0_0_12px_rgba(217,70,239,0.25)]">
-          <span id="counter-text">3 Free Messages Left</span>
-        </div>
+    <section class="relative w-full glass-card rounded-3xl p-6 flex flex-col items-center text-center">
+      <div class="w-14 h-14 rounded-2xl bg-gradient-to-br from-red-600/40 to-rose-500/35 border border-red-400/55 flex items-center justify-center mb-3.5 shadow-[0_0_28px_rgba(255,23,68,0.55)] animate-pulse">
+        <svg class="w-7 h-7 text-rose-100" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M16.5 10.5V6.75a4.5 4.5 0 10-9 0v3.75m-.75 11.25h10.5a2.25 2.25 0 002.25-2.25v-6.75a2.25 2.25 0 00-2.25-2.25H6.75a2.25 2.25 0 00-2.25 2.25v6.75a2.25 2.25 0 002.25 2.25z" />
+        </svg>
       </div>
 
-      <!-- Chat Messages Area (Compact Height for Mobile & Desktop) -->
-      <div id="chat-messages" class="chat-scroll h-[240px] sm:h-[265px] overflow-y-auto px-4 py-3.5 space-y-3 flex flex-col">
-        <!-- Messages are injected dynamically by JS -->
-      </div>
+      <span id="lock-badge" class="text-[11px] font-bold uppercase tracking-widest text-rose-200 bg-red-500/20 border border-red-400/40 px-3 py-0.5 rounded-full mb-2">
+        Free VIP Access • 18+
+      </span>
 
-      <!-- Quick Flirty Reply Chips (1-Tap Interaction) -->
-      <div id="quick-replies" class="px-3.5 pb-2 flex items-center gap-1.5 overflow-x-auto no-scrollbar">
-        <!-- Chips injected dynamically based on language -->
-      </div>
+      <h2 id="lock-title" class="text-xl font-extrabold text-white mb-1.5">
+        Ready to Watch Full Videos?
+      </h2>
 
-      <!-- Chat Input Bar -->
-      <form id="chat-form" class="p-3 border-t border-purple-500/20 bg-black/25 flex items-center gap-2">
-        <input
-          id="chat-input"
-          type="text"
-          autocomplete="off"
-          placeholder="Write something private to Sofia..."
-          class="flex-1 bg-purple-950/50 border border-purple-500/30 focus:border-fuchsia-400 focus:ring-2 focus:ring-fuchsia-500/25 rounded-2xl px-4 py-2.5 text-sm text-white placeholder-purple-300/50 outline-none transition-all"
-        />
-        <button
-          id="send-btn"
-          type="submit"
-          aria-label="Send message"
-          class="neon-cta-btn shrink-0 w-11 h-11 rounded-2xl flex items-center justify-center text-white cursor-pointer"
-        >
-          <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" d="M6 12L3.269 3.126A59.768 59.768 0 0121.485 12 59.77 59.77 0 013.27 20.876L5.999 12zm0 0h7.5" />
-          </svg>
-        </button>
-      </form>
+      <p id="lock-desc" class="text-xs sm:text-sm text-rose-200/85 max-w-xs mb-5 leading-relaxed">
+        Tap below to unlock all private 18+ videos in Full HD with instant free access.
+      </p>
 
-      <!-- ======================================================================
-           OFFER LOCK OVERLAY (Triggers Automatically After 3 Messages)
-           ====================================================================== -->
-      <div
-        id="offer-lock-overlay"
-        class="hidden inset-0 z-30 flex flex-col items-center justify-center text-center p-6 bg-[#0b0514]/82 backdrop-blur-md transition-opacity duration-500"
+      <!-- MAIN CTA BUTTON -->
+      <a
+        id="offer-cta-link"
+        href="https://jikgykm.com/cl/91a45d1408e00d1e?p1={click_id}&p2={campaign_id}&source=pushhouse&site={site_id}"
+        class="neon-cta-btn offer-link w-full max-w-xs py-4 px-6 rounded-2xl font-extrabold text-sm sm:text-base text-white flex items-center justify-center gap-2.5"
       >
-        <div class="w-14 h-14 rounded-2xl bg-gradient-to-br from-purple-600/40 to-pink-500/40 border border-fuchsia-400/50 flex items-center justify-center mb-3.5 shadow-[0_0_28px_rgba(217,70,239,0.5)] animate-pulse">
-          <svg class="w-7 h-7 text-fuchsia-200" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" d="M16.5 10.5V6.75a4.5 4.5 0 10-9 0v3.75m-.75 11.25h10.5a2.25 2.25 0 002.25-2.25v-6.75a2.25 2.25 0 00-2.25-2.25H6.75a2.25 2.25 0 00-2.25 2.25v6.75a2.25 2.25 0 002.25 2.25z" />
-          </svg>
-        </div>
+        <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+          <path d="M8 5v14l11-7z" />
+        </svg>
+        <span id="lock-cta-text">Unlock Free to Watch</span>
+      </a>
 
-        <span id="lock-badge" class="text-[11px] font-bold uppercase tracking-widest text-fuchsia-300 bg-fuchsia-500/20 border border-fuchsia-400/35 px-3 py-0.5 rounded-full mb-2">
-          VIP Access Required • 18+
-        </span>
-
-        <h2 id="lock-title" class="text-xl font-extrabold text-white mb-1.5">
-          Unlock Private Access (18+)
-        </h2>
-
-        <p id="lock-desc" class="text-xs sm:text-sm text-purple-200/85 max-w-xs mb-5 leading-relaxed">
-          Sofia wants to keep talking privately with you. Unlock unlimited uncensored chat &amp; private photos now.
-        </p>
-
-        <!-- Replace href="#YOUR_OFFER_LINK" with your CPA / Affiliate Offer URL -->
-        <a
-  id="offer-cta-link"
-  href="https://jikgykm.com/cl/91a45d1408e00d1e?p1={click_id}&p2={campaign_id}&source=pushhouse&site={site_id}"
-  class="neon-cta-btn w-full max-w-xs py-3.5 px-6 rounded-2xl font-bold text-sm sm:text-base text-white flex items-center justify-center gap-2"
->
-  <span id="lock-cta-text">Continue Private Chat</span>
-  <span class="text-lg leading-none">→</span>
-</a>
-
-        <!-- Small Demo Reset Button (Remove in production if desired) -->
-        <button
-          id="reset-demo-btn"
-          onclick="resetDemo()"
-          class="mt-4 text-[11px] text-purple-300/65 hover:text-purple-200 underline underline-offset-4 transition-colors cursor-pointer"
-        >
+      <div id="trust-note" class="mt-3.5 flex items-center justify-center gap-2 text-[11px] font-medium text-rose-300/75">
+        <span class="w-1.5 h-1.5 rounded-full bg-emerald-400"></span>
+        <span id="trust-text">100% Free • Instant Streaming • Private</span>
       </div>
     </section>
 
-    <!-- Non-intrusive GitHub Integration Note + Custom Image Preview Tester -->
   </main>
-
-  <!-- Toast Notification (Replaces alert()) -->
-  <div
-    id="toast-box"
-    class="fixed bottom-5 left-1/2 -translate-x-1/2 z-50 hidden items-center gap-2 px-4 py-2.5 rounded-2xl bg-[#1a0b2e]/95 border border-fuchsia-400/50 text-xs font-semibold text-fuchsia-100 shadow-[0_0_25px_rgba(217,70,239,0.45)] backdrop-blur-md"
-  >
-    <span id="toast-msg"></span>
-  </div>
 
   <script>
     /* ==========================================================================
-       1. CONFIGURATION & LOCALIZATION (EN / AR)
+       1. LOCALIZATION (EN / AR)
        ========================================================================== */
-    // Set USE_DEMO_MODE = false when deployed on Netlify with /.netlify/functions/chat
-    const USE_DEMO_MODE = true;
-    const OFFER_URL = "https://jikgykm.com/cl/91a45d1408e00d1e?p1={click_id}&p2={campaign_id}&source=pushhouse&site={site_id}";
-    const MAX_FREE_MESSAGES = 0;
-
     const I18N = {
       en: {
         dir: "ltr",
-        topBadge: "Private Lounge • 18+",
-        statusBadge: "Online Now • 18+",
-        heroTitle: "Sofia • Private AI Chat",
-        heroSubtitle: "Ready to talk privately with you... No filters, just you & me tonight.",
-        chatHeader: "Encrypted Private Session",
-        counterText: (n) => `${n} Free Message${n === 1 ? "" : "s"} Left`,
-        inputPlaceholder: "Write something private to Sofia...",
-        openingMsg: "Hey handsome... 😉 I've been waiting for someone fun to talk to tonight. What's on your mind right now?",
-        quickReplies: ["Hey Sofia 😘", "What are you wearing?", "Let's get private 🔥"],
-        demoReplies: [
-          "Mmm, I love how direct you are... 💜 Tell me what you really want to do with me tonight?",
-          "You're making me blush already 😘 I'm alone in my room right now... want to see a closer side of me?",
-          "Wait... I really don't want this conversation to end 🔥 Come join me in my private VIP room so we can continue without limits."
-        ],
-        lockBadge: "VIP Access Required • 18+",
-        lockTitle: "Unlock Private Access (18+)",
-        lockDesc: "Sofia wants to keep talking privately with you. Unlock unlimited uncensored chat & private photos now.",
-        lockCta: "Continue Private Chat",
-        resetBtn: "Reset Preview Demo",
-        githubNote: '💡 Keep your own <code class="text-fuchsia-300">&lt;img id="girl-avatar"&gt;</code> in GitHub',
-        testPhoto: "Test Your Photo",
-        offerToast: "Preview Mode: Redirects to your Offer URL in production!"
+        topBadge: "Private Videos • 18+",
+        heroTitle: "Watch Private Videos (18+)",
+        heroSubtitle: "Exclusive HD uncensored videos ready to stream right now.",
+        lockBadge: "Free VIP Access • 18+",
+        lockTitle: "Ready to Watch Full Videos?",
+        lockDesc: "Tap below to unlock all private 18+ videos in Full HD with instant free access.",
+        lockCta: "Unlock Free to Watch",
+        trustText: "100% Free • Instant Streaming • Private"
       },
       ar: {
         dir: "rtl",
-        topBadge: "جلسة خاصة • +18",
-        statusBadge: "متصلة الآن • +18",
-        heroTitle: "صوفيا • دردشة خاصة",
-        heroSubtitle: "مستعدة نهضرو بوحدنا بكل حرية... غير أنا ونتا هاد الليلة.",
-        chatHeader: "محادثة خاصة ومشفرة",
-        counterText: (n) => `بقات ليك ${n} رسائل مجانية`,
-        inputPlaceholder: "كتب شي رسالة خاصة لصوفيا...",
-        openingMsg: "أهلاً زوين 😉 كنت كنتسنى شي واحد نهضر معاه بوحدنا هاد الليلة... فاش كتفكر دابا؟",
-        quickReplies: ["أهلاً صوفيا 😘", "شنو كديري دابا؟", "بغيت نهضر معاك خاص 🔥"],
-        demoReplies: [
-          "عجبني أسلوبك بزاف... 💜 قول ليا شنو بغيتي نديرو أنا ونتا هاد الليلة؟",
-          "راكي خليتيني نحشم شوية 😘 أنا بوحدي فـ البيت دابا... بغيتي تقرب مني كتر؟",
-          "تسنا... ما بغيتش هاد الهضرة تسالي دابا 🔥 أجي نكملو فـ الغرفة الخاصة ديالي بلا حدود."
-        ],
-        lockBadge: "دخول خاص مطلوب • +18",
-        lockTitle: "افتح الدردشة الخاصة (+18)",
-        lockDesc: "صوفيا بغات تكمل معاك الهضرة بوحدكم. افتح الآن محادثة غير محدودة وصور خاصة.",
-        lockCta: "كمّل الدردشة الخاصة",
-        resetBtn: "إعادة تجربة المعاينة",
-        githubNote: '💡 حافظ على صورتك <code class="text-fuchsia-300">&lt;img id="girl-avatar"&gt;</code> فـ GitHub',
-        testPhoto: "جرب صورتك هنا",
-        offerToast: "وضع المعاينة: هنا غادي يتحول الزائر لرابط العرض (Offer) ديالك!"
+        topBadge: "فيديوهات خاصة • +18",
+        heroTitle: "شاهد الفيديوهات الخاصة (+18)",
+        heroSubtitle: "فيديوهات حصرية بجودة عالية جاهزة للمشاهدة المباشرة الآن.",
+        lockBadge: "دخول مجاني خاص • +18",
+        lockTitle: "مستعد لمشاهدة الفيديوهات الكاملة؟",
+        lockDesc: "اضغط فالأسفل لفتح جميع الفيديوهات الخاصة (+18) بجودة عالية ومجاناً.",
+        lockCta: "افتح المشاهدة مجاناً",
+        trustText: "مجاني 100% • تشغيل فوري • خصوصية تامة"
       }
     };
 
-    let currentLang = "en";
-    let messagesSent = 0;
-    let isTyping = false;
-
-    const chatMessagesEl = document.getElementById("chat-messages");
-    const chatForm = document.getElementById("chat-form");
-    const chatInput = document.getElementById("chat-input");
-    const quickRepliesEl = document.getElementById("quick-replies");
-    const offerOverlay = document.getElementById("offer-lock-overlay");
-
-    /* ==========================================================================
-       2. UI & LANGUAGE RENDERING
-       ========================================================================== */
     function setLanguage(lang) {
-      currentLang = lang;
       const t = I18N[lang];
       document.documentElement.lang = lang;
       document.documentElement.dir = t.dir;
 
-      // Toggle Button Active Styles
       const btnEn = document.getElementById("btn-lang-en");
       const btnAr = document.getElementById("btn-lang-ar");
       if (lang === "en") {
-        btnEn.className = "px-2.5 py-1 text-xs font-semibold rounded-full transition-all bg-fuchsia-600 text-white shadow-sm";
-        btnAr.className = "px-2.5 py-1 text-xs font-semibold rounded-full transition-all text-purple-200/75 hover:text-white";
+        btnEn.className = "px-2.5 py-1 text-xs font-semibold rounded-full transition-all bg-red-600 text-white shadow-sm cursor-pointer";
+        btnAr.className = "px-2.5 py-1 text-xs font-semibold rounded-full transition-all text-rose-200/75 hover:text-white cursor-pointer";
       } else {
-        btnAr.className = "px-2.5 py-1 text-xs font-semibold rounded-full transition-all bg-fuchsia-600 text-white shadow-sm";
-        btnEn.className = "px-2.5 py-1 text-xs font-semibold rounded-full transition-all text-purple-200/75 hover:text-white";
+        btnAr.className = "px-2.5 py-1 text-xs font-semibold rounded-full transition-all bg-red-600 text-white shadow-sm cursor-pointer";
+        btnEn.className = "px-2.5 py-1 text-xs font-semibold rounded-full transition-all text-rose-200/75 hover:text-white cursor-pointer";
       }
 
-      // Update Static Text
       document.getElementById("badge-top-text").textContent = t.topBadge;
-      document.getElementById("status-badge-text").textContent = t.statusBadge;
       document.getElementById("hero-title").textContent = t.heroTitle;
       document.getElementById("hero-subtitle").textContent = t.heroSubtitle;
-      document.getElementById("chat-header-label").textContent = t.chatHeader;
-      chatInput.placeholder = t.inputPlaceholder;
       document.getElementById("lock-badge").textContent = t.lockBadge;
       document.getElementById("lock-title").textContent = t.lockTitle;
       document.getElementById("lock-desc").textContent = t.lockDesc;
       document.getElementById("lock-cta-text").textContent = t.lockCta;
-      document.getElementById("reset-demo-btn").textContent = t.resetBtn;
-      document.getElementById("github-note").innerHTML = t.githubNote;
-      document.getElementById("preview-img-btn").textContent = t.testPhoto;
-
-      resetDemo();
-    }
-
-    function updateCounter() {
-      const remaining = Math.max(0, MAX_FREE_MESSAGES - messagesSent);
-      document.getElementById("counter-text").textContent = I18N[currentLang].counterText(remaining);
-    }
-
-    function renderQuickReplies() {
-      quickRepliesEl.innerHTML = "";
-      if (messagesSent >= MAX_FREE_MESSAGES) return;
-      I18N[currentLang].quickReplies.forEach((text) => {
-        const btn = document.createElement("button");
-        btn.type = "button";
-        btn.className = "shrink-0 text-[11px] font-medium px-3 py-1.5 rounded-full bg-purple-900/50 hover:bg-fuchsia-600/40 border border-purple-400/30 text-purple-100 transition-all cursor-pointer";
-        btn.textContent = text;
-        btn.onclick = () => sendMessage(text);
-        quickRepliesEl.appendChild(btn);
-      });
-    }
-
-    function appendMessage(role, text) {
-      const wrapper = document.createElement("div");
-      wrapper.className = `flex w-full msg-animate ${role === "user" ? "justify-end" : "justify-start"}`;
-
-      const bubble = document.createElement("div");
-      if (role === "user") {
-        bubble.className = "max-w-[82%] px-3.5 py-2.5 rounded-2xl rounded-br-sm text-xs sm:text-sm text-white bg-gradient-to-br from-purple-600 to-fuchsia-600 shadow-[0_4px_15px_rgba(168,85,247,0.35)]";
-      } else {
-        bubble.className = "max-w-[85%] px-3.5 py-2.5 rounded-2xl rounded-bl-sm text-xs sm:text-sm text-purple-50 bg-purple-950/75 border border-purple-400/25 shadow-sm leading-relaxed";
-      }
-      bubble.textContent = text;
-
-      wrapper.appendChild(bubble);
-      chatMessagesEl.appendChild(wrapper);
-      chatMessagesEl.scrollTop = chatMessagesEl.scrollHeight;
-    }
-
-    function showTypingIndicator() {
-      const el = document.createElement("div");
-      el.id = "typing-indicator";
-      el.className = "flex justify-start msg-animate";
-      el.innerHTML = `
-        <div class="px-4 py-3 rounded-2xl rounded-bl-sm bg-purple-950/75 border border-purple-400/25 flex items-center gap-1.5">
-          <span class="typing-dot"></span>
-          <span class="typing-dot"></span>
-          <span class="typing-dot"></span>
-        </div>
-      `;
-      chatMessagesEl.appendChild(el);
-      chatMessagesEl.scrollTop = chatMessagesEl.scrollHeight;
-    }
-
-    function removeTypingIndicator() {
-      const el = document.getElementById("typing-indicator");
-      if (el) el.remove();
+      document.getElementById("trust-text").textContent = t.trustText;
     }
 
     /* ==========================================================================
-       3. CHAT INTERACTION & 3-MESSAGE OFFER LOCK
+       2. INTERACTIVE RED NEON CANVAS BACKGROUND
        ========================================================================== */
-    async function sendMessage(text) {
-      const cleanText = text.trim();
-      if (!cleanText || isTyping || messagesSent >= MAX_FREE_MESSAGES) return;
-
-      isTyping = true;
-      chatInput.value = "";
-      appendMessage("user", cleanText);
-
-      messagesSent++;
-      updateCounter();
-      showTypingIndicator();
-
-      try {
-        let replyText = "";
-
-        if (USE_DEMO_MODE) {
-          // Fast simulated reply for preview
-          await new Promise((r) => setTimeout(r, 750));
-          const replies = I18N[currentLang].demoReplies;
-          replyText = replies[Math.min(messagesSent - 1, replies.length - 1)];
-        } else {
-          // Production Hook: Calls your Netlify Function (Tencent Cloud hy4-flash)
-          const res = await fetch("/.netlify/functions/chat", {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ message: cleanText })
-          });
-          const data = await res.json();
-          replyText = data.reply || I18N[currentLang].demoReplies[0];
-        }
-
-        removeTypingIndicator();
-        appendMessage("assistant", replyText);
-
-        // Trigger Offer Lock Overlay after the 3rd message
-        if (messagesSent >= MAX_FREE_MESSAGES) {
-          quickRepliesEl.innerHTML = "";
-          setTimeout(() => {
-            offerOverlay.classList.remove("hidden");
-          }, 950);
-        }
-      } catch (err) {
-        removeTypingIndicator();
-        appendMessage("assistant", "Connection hiccup... send that again 😘");
-      } finally {
-        isTyping = false;
-      }
-    }
-
-    chatForm.addEventListener("submit", (e) => {
-      e.preventDefault();
-      sendMessage(chatInput.value);
-    });
-
-    function resetDemo() {
-      messagesSent = 0;
-      isTyping = false;
-      chatMessagesEl.innerHTML = "";
-      offerOverlay.classList.add("hidden");
-      updateCounter();
-      appendMessage("assistant", I18N[currentLang].openingMsg);
-      renderQuickReplies();
-    }
-
-    function handleOfferClick(e) {
-      if (USE_DEMO_MODE) {
-        e.preventDefault();
-        showToast(I18N[currentLang].offerToast);
-      } else {
-        document.getElementById("offer-cta-link").href = OFFER_URL;
-      }
-    }
-
-    function previewLocalPhoto(event) {
-      const file = event.target.files?.[0];
-      if (!file) return;
-      const url = URL.createObjectURL(file);
-      document.getElementById("girl-avatar").src = url;
-      showToast(currentLang === "ar" ? "تم تحديث الصورة للمعاينة!" : "Preview photo updated!");
-    }
-
-    function showToast(msg) {
-      const box = document.getElementById("toast-box");
-      document.getElementById("toast-msg").textContent = msg;
-      box.classList.remove("hidden");
-      box.classList.add("flex");
-      clearTimeout(window._toastTimer);
-      window._toastTimer = setTimeout(() => {
-        box.classList.add("hidden");
-        box.classList.remove("flex");
-      }, 2800);
-    }
-
-    /* ==========================================================================
-       4. INTERACTIVE PURPLE/MAGENTA NEON CANVAS BACKGROUND
-       ========================================================================== */
-    (function initNeonCanvas() {
+    (function initRedNeonCanvas() {
       const canvas = document.getElementById("bg-canvas");
       const ctx = canvas.getContext("2d");
       let width = 0;
@@ -748,11 +482,11 @@
         particles = Array.from({ length: count }, () => ({
           x: Math.random() * width,
           y: Math.random() * height,
-          r: Math.random() * 2 + 0.8,
-          vy: -(Math.random() * 0.35 + 0.12),
+          r: Math.random() * 2.2 + 0.8,
+          vy: -(Math.random() * 0.38 + 0.14),
           vx: (Math.random() - 0.5) * 0.25,
-          alpha: Math.random() * 0.6 + 0.2,
-          color: Math.random() > 0.45 ? "#d946ef" : "#a855f7"
+          alpha: Math.random() * 0.65 + 0.2,
+          color: Math.random() > 0.45 ? "#ff1744" : "#f43f5e"
         }));
       }
 
@@ -781,7 +515,7 @@
         ctx.closePath();
         const grad = ctx.createLinearGradient(0, yBase - amp, 0, height);
         grad.addColorStop(0, color);
-        grad.addColorStop(1, "rgba(11, 5, 20, 0)");
+        grad.addColorStop(1, "rgba(13, 2, 5, 0)");
         ctx.globalAlpha = alpha;
         ctx.fillStyle = grad;
         ctx.fill();
@@ -792,21 +526,21 @@
         ctx.clearRect(0, 0, width, height);
         time += 0.014;
 
-        // Soft Purple & Magenta Flowing Waves
-        drawWave(height * 0.68, 36, 0.0032, 0.9, "rgba(168, 85, 247, 0.22)", 0.7);
-        drawWave(height * 0.78, 28, 0.0045, -1.1, "rgba(236, 72, 153, 0.16)", 0.6);
+        // Flowing Red & Crimson Neon Waves
+        drawWave(height * 0.68, 36, 0.0032, 0.9, "rgba(255, 23, 68, 0.24)", 0.72);
+        drawWave(height * 0.78, 28, 0.0045, -1.1, "rgba(220, 38, 38, 0.18)", 0.62);
 
-        // Soft Cursor / Touch Spotlight Glow
+        // Cursor / Touch Red Spotlight
         if (pointer.active) {
-          const glow = ctx.createRadialGradient(pointer.x, pointer.y, 0, pointer.x, pointer.y, 170);
-          glow.addColorStop(0, "rgba(217, 70, 239, 0.18)");
-          glow.addColorStop(0.5, "rgba(168, 85, 247, 0.07)");
-          glow.addColorStop(1, "rgba(11, 5, 20, 0)");
+          const glow = ctx.createRadialGradient(pointer.x, pointer.y, 0, pointer.x, pointer.y, 175);
+          glow.addColorStop(0, "rgba(255, 23, 68, 0.22)");
+          glow.addColorStop(0.5, "rgba(220, 38, 38, 0.08)");
+          glow.addColorStop(1, "rgba(13, 2, 5, 0)");
           ctx.fillStyle = glow;
           ctx.fillRect(0, 0, width, height);
         }
 
-        // Floating Neon Sparkles
+        // Floating Red Neon Sparkles
         for (const p of particles) {
           p.y += p.vy;
           p.x += p.vx;
@@ -818,7 +552,7 @@
           ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
           ctx.fillStyle = p.color;
           ctx.globalAlpha = p.alpha * (0.65 + 0.35 * Math.sin(time * 2 + p.x));
-          ctx.shadowBlur = 10;
+          ctx.shadowBlur = 12;
           ctx.shadowColor = p.color;
           ctx.fill();
           ctx.shadowBlur = 0;
@@ -835,7 +569,6 @@
       resize();
     })();
 
-    // Initialize default English view
     setLanguage("en");
   </script>
 </body>
