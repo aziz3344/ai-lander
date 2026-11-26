@@ -438,17 +438,6 @@
     </section>
 
     <!-- Non-intrusive GitHub Integration Note + Custom Image Preview Tester -->
-    <div class="mt-3.5 w-full flex flex-wrap items-center justify-between gap-2 px-2 text-[11px] text-purple-300/65">
-      <span id="github-note">💡 Keep your own <code class="text-fuchsia-300">&lt;img id="girl-avatar" src="..."&gt;</code> in GitHub</span>
-      <button
-        id="preview-img-btn"
-        onclick="document.getElementById('custom-img-input').click()"
-        class="text-fuchsia-300 hover:text-fuchsia-200 font-semibold underline underline-offset-2 cursor-pointer"
-      >
-        Test Your Photo
-      </button>
-      <input id="custom-img-input" type="file" accept="image/*" class="hidden" onchange="previewLocalPhoto(event)" />
-    </div>
   </main>
 
   <!-- Toast Notification (Replaces alert()) -->
