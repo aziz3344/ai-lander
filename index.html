@@ -395,7 +395,7 @@
            ====================================================================== -->
       <div
         id="offer-lock-overlay"
-        class="hidden absolute inset-0 z-30 flex flex-col items-center justify-center text-center p-6 bg-[#0b0514]/82 backdrop-blur-md transition-opacity duration-500"
+        class="hidden inset-0 z-30 flex flex-col items-center justify-center text-center p-6 bg-[#0b0514]/82 backdrop-blur-md transition-opacity duration-500"
       >
         <div class="w-14 h-14 rounded-2xl bg-gradient-to-br from-purple-600/40 to-pink-500/40 border border-fuchsia-400/50 flex items-center justify-center mb-3.5 shadow-[0_0_28px_rgba(217,70,239,0.5)] animate-pulse">
           <svg class="w-7 h-7 text-fuchsia-200" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
@@ -452,7 +452,7 @@
     // Set USE_DEMO_MODE = false when deployed on Netlify with /.netlify/functions/chat
     const USE_DEMO_MODE = true;
     const OFFER_URL = "https://jikgykm.com/cl/91a45d1408e00d1e?p1={click_id}&p2={campaign_id}&source=pushhouse&site={site_id}";
-    const MAX_FREE_MESSAGES = 3;
+    const MAX_FREE_MESSAGES = 0;
 
     const I18N = {
       en: {
