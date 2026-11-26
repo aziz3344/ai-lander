@@ -1,30 +1,36 @@
+```html
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" dir="ltr">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-  <title>Velvet AI • +18 Private Chat</title>
+  <title>Sofia • +18 Private AI Chat</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
   <style>
     :root {
       --bg-dark: #090208;
       --neon-pink: #ff007f;
       --neon-red: #ff1744;
-      --neon-soft: #ff5ca8;
-      --glass-bg: rgba(24, 5, 16, 0.72);
-      --glass-border: rgba(255, 0, 127, 0.38);
-      --text-main: #fff0f6;
-      --text-muted: #d8a9be;
+      --neon-soft: #ff66b2;
+      --glass-bg: rgba(22, 4, 15, 0.76);
+      --glass-border: rgba(255, 0, 127, 0.4);
+      --text-main: #fff0f7;
+      --text-muted: #d9a7be;
+      --online-green: #00ff88;
     }
 
     * {
       box-sizing: border-box;
       margin: 0;
       padding: 0;
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      -webkit-tap-highlight-color: transparent;
     }
 
     body {
-      background: radial-gradient(circle at top, #280416 0%, var(--bg-dark) 65%);
+      background: radial-gradient(circle at top, #2c0418 0%, var(--bg-dark) 68%);
       color: var(--text-main);
       min-height: 100dvh;
       display: flex;
@@ -35,7 +41,7 @@
       position: relative;
     }
 
-    /* Animated Neon Background */
+    /* Animated Pink/Red Neon Particles Background */
     #bgCanvas {
       position: fixed;
       inset: 0;
@@ -48,58 +54,310 @@
     /* Cursor / Touch Neon Glow */
     .cursor-glow {
       position: fixed;
-      width: 260px;
-      height: 260px;
+      width: 280px;
+      height: 280px;
       border-radius: 50%;
-      background: radial-gradient(circle, rgba(255, 0, 127, 0.25), rgba(255, 23, 68, 0.08) 50%, transparent 72%);
+      background: radial-gradient(circle, rgba(255, 0, 127, 0.26), rgba(255, 23, 68, 0.09) 50%, transparent 72%);
       pointer-events: none;
       transform: translate(-50%, -50%);
       z-index: 1;
-      transition: opacity 0.3s ease;
+      transition: opacity 0.25s ease;
     }
 
-    /* Main Chat Card */
-    .chat-container {
+    /* Main Glassmorphism Card */
+    .app-card {
       position: relative;
       z-index: 2;
       width: 100%;
       max-width: 410px;
-      height: min(640px, 92dvh);
+      height: min(690px, 94dvh);
       background: var(--glass-bg);
-      backdrop-filter: blur(18px);
-      -webkit-backdrop-filter: blur(18px);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
       border: 1px solid var(--glass-border);
-      border-radius: 24px;
+      border-radius: 26px;
       box-shadow:
-        0 0 25px rgba(255, 0, 127, 0.28),
-        0 0 60px rgba(255, 23, 68, 0.16),
-        inset 0 0 18px rgba(255, 0, 127, 0.08);
+        0 0 28px rgba(255, 0, 127, 0.28),
+        0 0 65px rgba(255, 23, 68, 0.18),
+        inset 0 0 20px rgba(255, 0, 127, 0.08);
+      overflow: hidden;
       display: flex;
       flex-direction: column;
-      overflow: hidden;
     }
 
-    /* Header */
-    .chat-header {
-      padding: 14px 16px;
-      background: linear-gradient(90deg, rgba(255, 0, 127, 0.18), rgba(255, 23, 68, 0.14));
-      border-bottom: 1px solid rgba(255, 0, 127, 0.28);
+    /* Views & Smooth Transition */
+    .view {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      flex-direction: column;
+      transition: opacity 0.35s ease, transform 0.35s ease;
+      opacity: 0;
+      pointer-events: none;
+      transform: translateY(14px) scale(0.98);
+    }
+
+    .view.active {
+      opacity: 1;
+      pointer-events: auto;
+      transform: translateY(0) scale(1);
+    }
+
+    /* ============================
+       STEP 1: ONLINE PROFILE VIEW
+       ============================ */
+    .profile-top-bar {
+      padding: 14px 16px 10px;
       display: flex;
       align-items: center;
       justify-content: space-between;
-      gap: 10px;
+      gap: 8px;
     }
 
-    .profile-info {
+    .top-badges {
       display: flex;
       align-items: center;
-      gap: 11px;
+      gap: 8px;
+    }
+
+    .badge-18 {
+      font-size: 11px;
+      font-weight: 800;
+      padding: 4px 9px;
+      border-radius: 999px;
+      background: linear-gradient(135deg, var(--neon-red), var(--neon-pink));
+      color: #fff;
+      box-shadow: 0 0 12px rgba(255, 23, 68, 0.75);
+      letter-spacing: 0.4px;
+    }
+
+    .online-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 11.5px;
+      font-weight: 600;
+      padding: 4px 10px;
+      border-radius: 999px;
+      background: rgba(0, 255, 136, 0.1);
+      border: 1px solid rgba(0, 255, 136, 0.35);
+      color: #baffde;
+    }
+
+    .pulse-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--online-green);
+      box-shadow: 0 0 8px var(--online-green);
+      animation: livePulse 1.5s infinite;
+    }
+
+    .lang-select {
+      background: rgba(255, 0, 127, 0.16);
+      color: #fff;
+      border: 1px solid rgba(255, 0, 127, 0.4);
+      border-radius: 10px;
+      padding: 5px 8px;
+      font-size: 11.5px;
+      font-weight: 600;
+      outline: none;
+      cursor: pointer;
+    }
+
+    .lang-select option {
+      background: #1a0411;
+      color: #fff;
+    }
+
+    .profile-content {
+      flex: 1;
+      padding: 4px 16px 18px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      gap: 12px;
+      overflow-y: auto;
+    }
+
+    /* Hero Photo */
+    .hero-photo-wrap {
+      position: relative;
+      width: 100%;
+      flex: 1;
+      min-height: 280px;
+      max-height: 390px;
+      border-radius: 22px;
+      overflow: hidden;
+      border: 2px solid rgba(255, 0, 127, 0.65);
+      box-shadow:
+        0 0 22px rgba(255, 0, 127, 0.4),
+        0 0 40px rgba(255, 23, 68, 0.22);
+      background: #1a0411;
+    }
+
+    .hero-photo-wrap img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: top center;
+      display: block;
+      transition: transform 0.5s ease;
+    }
+
+    .hero-photo-wrap:hover img {
+      transform: scale(1.03);
+    }
+
+    .hero-gradient {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(
+        to top,
+        rgba(9, 2, 8, 0.94) 0%,
+        rgba(9, 2, 8, 0.45) 36%,
+        transparent 68%
+      );
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      padding: 16px;
+    }
+
+    .hero-name-row {
+      display: flex;
+      align-items: center;
+      gap: 7px;
+      margin-bottom: 4px;
+    }
+
+    .hero-name-row h1 {
+      font-size: 24px;
+      font-weight: 800;
+      color: #fff;
+      text-shadow: 0 2px 12px rgba(255, 0, 127, 0.55);
+    }
+
+    .verified-badge {
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--neon-pink), var(--neon-red));
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 11px;
+      color: #fff;
+      box-shadow: 0 0 10px rgba(255, 0, 127, 0.8);
+      flex-shrink: 0;
+    }
+
+    .hero-sub {
+      font-size: 12.5px;
+      color: #ffc2df;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-weight: 500;
+    }
+
+    /* Bio & Tags */
+    .profile-bio {
+      font-size: 13.5px;
+      line-height: 1.5;
+      color: var(--text-muted);
+      text-align: center;
+      padding: 0 4px;
+    }
+
+    .neon-tags {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 8px;
+    }
+
+    .neon-tag {
+      font-size: 11.5px;
+      font-weight: 600;
+      padding: 6px 12px;
+      border-radius: 999px;
+      background: rgba(255, 0, 127, 0.14);
+      border: 1px solid rgba(255, 0, 127, 0.42);
+      color: #ffd1e8;
+      box-shadow: 0 0 10px rgba(255, 0, 127, 0.18);
+    }
+
+    /* Primary CTA Button */
+    .start-chat-btn {
+      width: 100%;
+      padding: 15px 20px;
+      border: none;
+      border-radius: 999px;
+      background: linear-gradient(135deg, var(--neon-pink), var(--neon-red));
+      color: #fff;
+      font-size: 15.5px;
+      font-weight: 800;
+      letter-spacing: 0.3px;
+      cursor: pointer;
+      box-shadow: 0 0 24px rgba(255, 0, 127, 0.65);
+      animation: pulseGlow 2s infinite;
+      transition: transform 0.18s ease, box-shadow 0.2s ease;
+    }
+
+    .start-chat-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 0 34px rgba(255, 23, 68, 0.9);
+    }
+
+    .start-chat-btn:active {
+      transform: scale(0.97);
+    }
+
+    /* ============================
+       STEP 2: PRIVATE +18 CHAT VIEW
+       ============================ */
+    .chat-header {
+      padding: 13px 14px;
+      background: linear-gradient(90deg, rgba(255, 0, 127, 0.2), rgba(255, 23, 68, 0.14));
+      border-bottom: 1px solid rgba(255, 0, 127, 0.3);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+    }
+
+    .chat-header-left {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      min-width: 0;
+    }
+
+    .back-btn {
+      width: 34px;
+      height: 34px;
+      border-radius: 50%;
+      border: 1px solid rgba(255, 0, 127, 0.4);
+      background: rgba(255, 0, 127, 0.14);
+      color: #fff;
+      font-size: 16px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      transition: background 0.2s;
+    }
+
+    .back-btn:hover {
+      background: rgba(255, 0, 127, 0.32);
     }
 
     .avatar-wrap {
       position: relative;
-      width: 44px;
-      height: 44px;
+      width: 42px;
+      height: 42px;
       border-radius: 50%;
       padding: 2px;
       background: linear-gradient(135deg, var(--neon-pink), var(--neon-red));
@@ -107,32 +365,32 @@
       flex-shrink: 0;
     }
 
-    .avatar-inner {
+    .avatar-wrap img {
       width: 100%;
       height: 100%;
       border-radius: 50%;
-      background: radial-gradient(circle at 30% 30%, #ff4da6, #7a002b);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 20px;
-      font-weight: 700;
-      color: #fff;
+      object-fit: cover;
+      object-position: top center;
+      display: block;
     }
 
     .online-dot {
       position: absolute;
-      bottom: 1px;
-      right: 1px;
+      bottom: 0;
+      right: 0;
       width: 11px;
       height: 11px;
       border-radius: 50%;
-      background: #00ff88;
+      background: var(--online-green);
       border: 2px solid #1b0512;
-      box-shadow: 0 0 8px #00ff88;
+      box-shadow: 0 0 8px var(--online-green);
     }
 
-    .profile-text h1 {
+    .chat-user-meta {
+      min-width: 0;
+    }
+
+    .chat-user-meta h2 {
       font-size: 15px;
       font-weight: 700;
       display: flex;
@@ -141,54 +399,30 @@
       color: #fff;
     }
 
-    .badge-18 {
-      font-size: 10px;
-      font-weight: 800;
+    .chat-user-meta .badge-18 {
+      font-size: 9.5px;
       padding: 2px 6px;
-      border-radius: 999px;
-      background: linear-gradient(135deg, var(--neon-red), var(--neon-pink));
-      color: #fff;
-      box-shadow: 0 0 10px rgba(255, 23, 68, 0.75);
-      letter-spacing: 0.4px;
     }
 
-    .status-text {
+    .chat-status {
       font-size: 11.5px;
       color: var(--neon-soft);
       margin-top: 2px;
-    }
-
-    .header-right {
-      display: flex;
-      align-items: center;
-      gap: 8px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
     }
 
     .msg-counter {
-      font-size: 11px;
+      font-size: 11.5px;
       font-weight: 700;
-      padding: 4px 9px;
+      padding: 5px 10px;
       border-radius: 999px;
-      background: rgba(255, 0, 127, 0.16);
-      border: 1px solid rgba(255, 0, 127, 0.4);
+      background: rgba(255, 0, 127, 0.18);
+      border: 1px solid rgba(255, 0, 127, 0.45);
       color: #ffd1e6;
       white-space: nowrap;
-    }
-
-    .lang-select {
-      background: rgba(255, 0, 127, 0.15);
-      color: #fff;
-      border: 1px solid rgba(255, 0, 127, 0.35);
-      border-radius: 10px;
-      padding: 4px 6px;
-      font-size: 11px;
-      outline: none;
-      cursor: pointer;
-    }
-
-    .lang-select option {
-      background: #1a0411;
-      color: #fff;
+      flex-shrink: 0;
     }
 
     /* Messages Area */
@@ -223,8 +457,8 @@
 
     .msg.ai {
       align-self: flex-start;
-      background: linear-gradient(135deg, rgba(255, 0, 127, 0.22), rgba(255, 23, 68, 0.15));
-      border: 1px solid rgba(255, 0, 127, 0.42);
+      background: linear-gradient(135deg, rgba(255, 0, 127, 0.24), rgba(255, 23, 68, 0.16));
+      border: 1px solid rgba(255, 0, 127, 0.45);
       border-bottom-left-radius: 4px;
       box-shadow: 0 0 14px rgba(255, 0, 127, 0.16);
       color: #fff2f8;
@@ -235,14 +469,14 @@
       background: linear-gradient(135deg, var(--neon-pink), var(--neon-red));
       border-bottom-right-radius: 4px;
       color: #fff;
-      box-shadow: 0 4px 15px rgba(255, 23, 68, 0.4);
+      box-shadow: 0 4px 16px rgba(255, 23, 68, 0.42);
     }
 
     .typing {
       display: inline-flex;
       align-items: center;
       gap: 5px;
-      padding: 10px 14px;
+      padding: 11px 15px;
     }
 
     .typing span {
@@ -256,9 +490,9 @@
     .typing span:nth-child(2) { animation-delay: 0.2s; }
     .typing span:nth-child(3) { animation-delay: 0.4s; }
 
-    /* Quick Prompts */
+    /* Quick Reply Chips */
     .quick-replies {
-      padding: 0 14px 8px;
+      padding: 0 14px 9px;
       display: flex;
       gap: 7px;
       overflow-x: auto;
@@ -270,25 +504,26 @@
     .quick-chip {
       flex-shrink: 0;
       font-size: 12px;
-      padding: 6px 11px;
+      font-weight: 500;
+      padding: 7px 12px;
       border-radius: 999px;
-      background: rgba(255, 0, 127, 0.14);
-      border: 1px solid rgba(255, 0, 127, 0.35);
-      color: #ffc7e0;
+      background: rgba(255, 0, 127, 0.15);
+      border: 1px solid rgba(255, 0, 127, 0.38);
+      color: #ffcce3;
       cursor: pointer;
       transition: all 0.2s ease;
     }
 
     .quick-chip:hover {
-      background: rgba(255, 0, 127, 0.32);
-      box-shadow: 0 0 10px rgba(255, 0, 127, 0.45);
+      background: rgba(255, 0, 127, 0.34);
+      box-shadow: 0 0 12px rgba(255, 0, 127, 0.45);
     }
 
-    /* Input Area */
+    /* Input Bar */
     .chat-input-area {
       padding: 12px 14px;
-      background: rgba(15, 2, 10, 0.85);
-      border-top: 1px solid rgba(255, 0, 127, 0.25);
+      background: rgba(14, 2, 9, 0.88);
+      border-top: 1px solid rgba(255, 0, 127, 0.28);
       display: flex;
       gap: 9px;
       align-items: center;
@@ -297,9 +532,9 @@
     .chat-input-area input {
       flex: 1;
       background: rgba(255, 255, 255, 0.06);
-      border: 1px solid rgba(255, 0, 127, 0.35);
+      border: 1px solid rgba(255, 0, 127, 0.38);
       border-radius: 999px;
-      padding: 11px 15px;
+      padding: 11px 16px;
       color: #fff;
       font-size: 14px;
       outline: none;
@@ -308,7 +543,7 @@
 
     .chat-input-area input:focus {
       border-color: var(--neon-pink);
-      box-shadow: 0 0 12px rgba(255, 0, 127, 0.38);
+      box-shadow: 0 0 12px rgba(255, 0, 127, 0.42);
     }
 
     .chat-input-area input::placeholder {
@@ -316,8 +551,8 @@
     }
 
     .send-btn {
-      width: 42px;
-      height: 42px;
+      width: 44px;
+      height: 44px;
       border-radius: 50%;
       border: none;
       background: linear-gradient(135deg, var(--neon-pink), var(--neon-red));
@@ -327,28 +562,22 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      box-shadow: 0 0 14px rgba(255, 0, 127, 0.6);
-      transition: transform 0.15s ease, box-shadow 0.2s ease;
+      box-shadow: 0 0 16px rgba(255, 0, 127, 0.65);
+      transition: transform 0.15s ease;
       flex-shrink: 0;
     }
 
-    .send-btn:active {
-      transform: scale(0.94);
-    }
-
-    .send-btn:disabled {
-      opacity: 0.45;
-      cursor: not-allowed;
-    }
+    .send-btn:active { transform: scale(0.93); }
+    .send-btn:disabled { opacity: 0.45; cursor: not-allowed; }
 
     /* Offer Lock Overlay */
     .lock-overlay {
       position: absolute;
       inset: 0;
-      background: rgba(12, 2, 9, 0.9);
-      backdrop-filter: blur(12px);
-      -webkit-backdrop-filter: blur(12px);
-      z-index: 10;
+      background: rgba(11, 2, 8, 0.92);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      z-index: 20;
       display: none;
       flex-direction: column;
       align-items: center;
@@ -358,22 +587,26 @@
       animation: fadeUp 0.35s ease;
     }
 
-    .lock-overlay.active {
-      display: flex;
+    .lock-overlay.active { display: flex; }
+
+    .lock-avatar {
+      width: 78px;
+      height: 78px;
+      border-radius: 50%;
+      padding: 3px;
+      background: linear-gradient(135deg, var(--neon-pink), var(--neon-red));
+      box-shadow: 0 0 28px rgba(255, 0, 127, 0.78);
+      margin-bottom: 16px;
+      position: relative;
+      animation: pulseGlow 1.8s infinite;
     }
 
-    .lock-icon {
-      width: 68px;
-      height: 68px;
+    .lock-avatar img {
+      width: 100%;
+      height: 100%;
       border-radius: 50%;
-      background: linear-gradient(135deg, var(--neon-pink), var(--neon-red));
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 30px;
-      margin-bottom: 16px;
-      box-shadow: 0 0 28px rgba(255, 0, 127, 0.75);
-      animation: pulseGlow 1.8s infinite;
+      object-fit: cover;
+      object-position: top center;
     }
 
     .lock-overlay h2 {
@@ -389,17 +622,17 @@
       font-size: 13.5px;
       color: var(--text-muted);
       line-height: 1.5;
-      margin-bottom: 20px;
+      margin-bottom: 18px;
       max-width: 310px;
     }
 
-    .blurred-preview {
+    .blurred-teaser {
       width: 100%;
-      max-width: 260px;
-      padding: 12px;
+      max-width: 275px;
+      padding: 13px 14px;
       border-radius: 14px;
-      background: linear-gradient(135deg, rgba(255, 0, 127, 0.25), rgba(255, 23, 68, 0.22));
-      border: 1px dashed rgba(255, 92, 168, 0.6);
+      background: linear-gradient(135deg, rgba(255, 0, 127, 0.24), rgba(255, 23, 68, 0.22));
+      border: 1px dashed rgba(255, 102, 178, 0.65);
       margin-bottom: 20px;
       font-size: 12.5px;
       color: #ffd6e9;
@@ -408,8 +641,8 @@
     .unlock-btn {
       display: inline-block;
       width: 100%;
-      max-width: 280px;
-      padding: 14px 20px;
+      max-width: 290px;
+      padding: 15px 20px;
       border-radius: 999px;
       background: linear-gradient(135deg, var(--neon-pink), var(--neon-red));
       color: #fff;
@@ -417,24 +650,23 @@
       font-size: 15px;
       font-weight: 800;
       letter-spacing: 0.3px;
-      box-shadow: 0 0 24px rgba(255, 0, 127, 0.7);
-      transition: transform 0.2s ease, box-shadow 0.2s ease;
-      animation: pulseGlow 2s infinite;
+      box-shadow: 0 0 26px rgba(255, 0, 127, 0.75);
+      animation: pulseGlow 1.8s infinite;
+      transition: transform 0.2s ease;
     }
 
-    .unlock-btn:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 0 32px rgba(255, 23, 68, 0.9);
-    }
+    .unlock-btn:hover { transform: translateY(-2px); }
 
     .lock-note {
       margin-top: 12px;
-      font-size: 11px;
+      font-size: 11.5px;
       color: #b7859d;
     }
 
-    [dir="rtl"] .msg.ai { align-self: flex-start; border-bottom-left-radius: 18px; border-bottom-right-radius: 4px; }
-    [dir="rtl"] .msg.user { align-self: flex-end; border-bottom-right-radius: 18px; border-bottom-left-radius: 4px; }
+    /* RTL Adjustments */
+    [dir="rtl"] .back-btn { transform: rotate(180deg); }
+    [dir="rtl"] .msg.ai { border-bottom-left-radius: 18px; border-bottom-right-radius: 4px; }
+    [dir="rtl"] .msg.user { border-bottom-right-radius: 18px; border-bottom-left-radius: 4px; }
 
     @keyframes fadeUp {
       from { opacity: 0; transform: translateY(8px); }
@@ -448,7 +680,12 @@
 
     @keyframes pulseGlow {
       0%, 100% { box-shadow: 0 0 18px rgba(255, 0, 127, 0.65); }
-      50% { box-shadow: 0 0 32px rgba(255, 23, 68, 0.95); }
+      50% { box-shadow: 0 0 34px rgba(255, 23, 68, 0.95); }
+    }
+
+    @keyframes livePulse {
+      0%, 100% { transform: scale(1); opacity: 1; }
+      50% { transform: scale(1.35); opacity: 0.65; }
     }
   </style>
 </head>
@@ -456,21 +693,19 @@
   <canvas id="bgCanvas"></canvas>
   <div class="cursor-glow" id="cursorGlow"></div>
 
-  <div class="chat-container" id="chatContainer">
-    <div class="chat-header">
-      <div class="profile-info">
-        <div class="avatar-wrap">
-          <div class="avatar-inner">S</div>
-          <span class="online-dot"></span>
+  <main class="app-card">
+    <!-- ==========================================
+         STEP 1: ONLINE PROFILE VIEW (DEFAULT)
+         ========================================== -->
+    <section class="view active" id="profileView">
+      <div class="profile-top-bar">
+        <div class="top-badges">
+          <span class="badge-18">+18</span>
+          <span class="online-pill">
+            <span class="pulse-dot"></span>
+            <span id="profileOnlineLabel">Online Now</span>
+          </span>
         </div>
-        <div class="profile-text">
-          <h1>Sofia <span class="badge-18">+18</span></h1>
-          <div class="status-text" id="statusText">Online now • Private AI Chat</div>
-        </div>
-      </div>
-
-      <div class="header-right">
-        <div class="msg-counter" id="msgCounter">3 / 3</div>
         <select class="lang-select" id="langSelect" aria-label="Language">
           <option value="en">EN</option>
           <option value="fr">FR</option>
@@ -478,27 +713,93 @@
           <option value="es">ES</option>
         </select>
       </div>
-    </div>
 
-    <div class="chat-messages" id="chatMessages"></div>
+      <div class="profile-content">
+        <div class="hero-photo-wrap">
+          <img
+            src="1000454318.jpg"
+            alt="Sofia, 23"
+            onerror="this.src='https://placehold.co/400x520/280416/ff5ca8?text=Sofia+23'"
+          />
+          <div class="hero-gradient">
+            <div class="hero-name-row">
+              <h1>Sofia, 23</h1>
+              <span class="verified-badge" title="Verified">✓</span>
+            </div>
+            <div class="hero-sub" id="heroSub">Online now • Private +18 Chat</div>
+          </div>
+        </div>
 
-    <div class="quick-replies" id="quickReplies"></div>
+        <p class="profile-bio" id="profileBio">
+          Looking for someone fun to keep me company tonight 😉 No filters, just us two in private.
+        </p>
 
-    <form class="chat-input-area" id="chatForm">
-      <input type="text" id="userInput" autocomplete="off" placeholder="Write a private message..." required />
-      <button type="submit" class="send-btn" id="sendBtn" aria-label="Send">➤</button>
-    </form>
+        <div class="neon-tags" id="neonTags">
+          <span class="neon-tag">🔥 Flirty</span>
+          <span class="neon-tag">💋 Private Chat</span>
+          <span class="neon-tag">🔒 100% Discreet</span>
+        </div>
 
-    <!-- +18 Offer Lock Overlay -->
-    <div class="lock-overlay" id="lockOverlay">
-      <div class="lock-icon">🔥</div>
-      <h2 id="lockTitle">Unlock Unlimited +18 Chat</h2>
-      <p id="lockDesc">Your 3 free preview messages are over. Verify you are 18+ to continue chatting privately and unlock exclusive content.</p>
-      <div class="blurred-preview" id="lockTeaser">🔒 1 Private Voice Note & Uncensored Mode Waiting...</div>
-      <a href="#" class="unlock-btn" id="unlockBtn" target="_self" rel="noopener">CONTINUE (+18 VERIFY)</a>
-      <div class="lock-note" id="lockNote">Instant access • 100% Private & Discreet</div>
-    </div>
-  </div>
+        <button type="button" class="start-chat-btn" id="startChatBtn">
+          Start Private Chat 🔥
+        </button>
+      </div>
+    </section>
+
+    <!-- ==========================================
+         STEP 2: PRIVATE +18 AI CHAT VIEW
+         ========================================== -->
+    <section class="view" id="chatView">
+      <div class="chat-header">
+        <div class="chat-header-left">
+          <button type="button" class="back-btn" id="backToProfileBtn" aria-label="Back">←</button>
+          <div class="avatar-wrap">
+            <img
+              src="1000454318.jpg"
+              alt="Sofia"
+              onerror="this.src='https://placehold.co/100x100/280416/ff5ca8?text=S'"
+            />
+            <span class="online-dot"></span>
+          </div>
+          <div class="chat-user-meta">
+            <h2>Sofia <span class="badge-18">+18</span></h2>
+            <div class="chat-status" id="chatStatus">Online now</div>
+          </div>
+        </div>
+        <div class="msg-counter" id="msgCounter">3 / 3</div>
+      </div>
+
+      <div class="chat-messages" id="chatMessages"></div>
+      <div class="quick-replies" id="quickReplies"></div>
+
+      <form class="chat-input-area" id="chatForm">
+        <input type="text" id="userInput" autocomplete="off" placeholder="Write a private message..." required />
+        <button type="submit" class="send-btn" id="sendBtn" aria-label="Send">➤</button>
+      </form>
+
+      <!-- +18 Offer Lock Overlay -->
+      <div class="lock-overlay" id="lockOverlay">
+        <div class="lock-avatar">
+          <img
+            src="1000454318.jpg"
+            alt="Sofia"
+            onerror="this.src='https://placehold.co/150x150/280416/ff5ca8?text=S'"
+          />
+        </div>
+        <h2 id="lockTitle">Unlock Unlimited +18 Chat</h2>
+        <p id="lockDesc">
+          Your 3 free messages have ended. Confirm you are 18+ to keep chatting with Sofia with no limits.
+        </p>
+        <div class="blurred-teaser" id="lockTeaser">
+          🔒 1 Private Voice Note & Uncensored Mode Waiting...
+        </div>
+        <a href="#" class="unlock-btn" id="unlockBtn" target="_self" rel="noopener">
+          VERIFY 18+ & CONTINUE 🔥
+        </a>
+        <div class="lock-note" id="lockNote">Fast 1-step access • 100% Discreet</div>
+      </div>
+    </section>
+  </main>
 
   <script>
     // ==========================================
@@ -508,77 +809,121 @@
       apiEndpoint: "/.netlify/functions/chat",
       maxFreeMessages: 3,
       offerUrl: "https://PUT-YOUR-GOLDEN-GOOSE-LINK-HERE.com",
-      passUrlParams: true // كيدوز المتغيرات بحال p1 / click_id أوتوماتيكياً
+      passUrlParams: true
     };
 
     const TRANSLATIONS = {
       en: {
         dir: "ltr",
-        status: "Online now • Private +18 Chat",
+        onlineNow: "Online Now",
+        heroSub: "Online now • Private +18 Chat",
+        bio: "Looking for someone fun to keep me company tonight 😉 No filters, just us two in private.",
+        tags: ["🔥 Flirty", "💋 Private Chat", "🔒 100% Discreet"],
+        startBtn: "Start Private Chat 🔥",
+        typing: "Typing...",
         placeholder: "Type something flirty...",
-        welcome: "Hey handsome 😉 I'm Sofia. I'm online right now and ready for a private +18 chat. What's on your mind tonight?",
+        welcome: "Hey handsome 😉 Glad you clicked on my profile. I'm online right now—what's on your mind tonight?",
         chips: ["Are you alone? 😈", "Tell me a secret 🔥", "Let's play a game 💋"],
         lockTitle: "Unlock Unlimited +18 Chat",
         lockDesc: "Your 3 free messages have ended. Confirm you are 18+ to keep chatting with Sofia with no limits.",
-        lockTeaser: "🔒 Private Mode & Uncensored Replies Ready...",
+        lockTeaser: "🔒 1 Private Voice Note & Uncensored Mode Waiting...",
         unlockBtn: "VERIFY 18+ & CONTINUE 🔥",
         lockNote: "Fast 1-step access • 100% Discreet",
-        fallback: "Mmm, I like where this is going 😉 Tell me more before our free preview ends..."
+        fallbacks: [
+          "Mmm, I like your energy already 😉 Tell me what you'd do if I were right next to you...",
+          "Ooh, bold move 🔥 You definitely know how to get my attention. Keep going...",
+          "I'm getting really into this 💋 Don't stop now—unlock our private room so we can go further."
+        ]
       },
       fr: {
         dir: "ltr",
-        status: "En ligne • Chat Privé +18",
+        onlineNow: "En ligne",
+        heroSub: "En ligne • Chat Privé +18",
+        bio: "Je cherche quelqu'un de sympa pour me tenir compagnie ce soir 😉 Sans filtre, juste toi et moi en privé.",
+        tags: ["🔥 Séduisante", "💋 Chat Privé", "🔒 100% Discret"],
+        startBtn: "Démarrer le Chat Privé 🔥",
+        typing: "Écrit...",
         placeholder: "Écris un message privé...",
-        welcome: "Coucou 😉 Moi c'est Sofia. Je suis en ligne pour un chat privé +18 sans filtre. Qu'est-ce qui te ferait plaisir ce soir ?",
+        welcome: "Coucou 😉 Contente que tu aies cliqué sur mon profil. Je suis dispo maintenant—qu'est-ce qui te ferait plaisir ce soir ?",
         chips: ["Tu es seule ? 😈", "Dis-moi un secret 🔥", "On joue à un jeu ? 💋"],
         lockTitle: "Débloque le Chat +18 Illimité",
         lockDesc: "Tes 3 messages gratuits sont terminés. Confirme que tu as +18 ans pour continuer en privé avec Sofia.",
-        lockTeaser: "🔒 Mode Privé & Réponses Sans Filtre en attente...",
+        lockTeaser: "🔒 1 Note Vocale Privée & Mode Sans Filtre en attente...",
         unlockBtn: "CONFIRMER +18 & CONTINUER 🔥",
         lockNote: "Accès immédiat • 100% Discret",
-        fallback: "Mmm, j'adore ton style 😉 Dis-m'en un peu plus avant la fin de l'aperçu gratuit..."
+        fallbacks: [
+          "Mmm, j'adore déjà ton style 😉 Dis-moi ce que tu ferais si j'étais juste à côté de toi...",
+          "Oh, tu es audacieux 🔥 Tu sais vraiment comment attirer mon attention. Continue...",
+          "J'adore cette conversation 💋 Ne t'arrête pas—débloque notre chat privé pour aller plus loin."
+        ]
       },
       ar: {
         dir: "rtl",
-        status: "متصلة الآن • شات خاص +18",
+        onlineNow: "متصلة الآن",
+        heroSub: "متصلة الآن • شات خاص +18",
+        bio: "كنقلب على شي واحد ظريف يدوز معايا هاد الليلة 😉 بلا قيود، غير أنا وياك فـ الخاص.",
+        tags: ["🔥 جريئة", "💋 شات خاص", "🔒 سرية 100%"],
+        startBtn: "ابدأ الشات الخاص الآن 🔥",
+        typing: "تكتب الآن...",
         placeholder: "كتب رسالة خاصة...",
-        welcome: "أهلاً 😉 أنا صوفيا. متصلة دابا ومستعدة لدردشة خاصة +18 بلا قيود. فاش كتفكر هاد الليلة؟",
+        welcome: "أهلاً 😉 فرحت ملي دخلتي لبروفيلي. أنا متصلة دابا ومستعدة لدردشة خاصة +18—فاش كتفكر هاد الليلة؟",
         chips: ["واش بوحدك؟ 😈", "قولي ليا شي سر 🔥", "نلعبو شي لعبة؟ 💋"],
         lockTitle: "فتح الشات الخاص +18 بلا حدود",
         lockDesc: "سالاو 3 ميساجات مجانية. أكد أن عمرك +18 باش تكمل الدردشة الخاصة مع صوفيا بلا توقف.",
-        lockTeaser: "🔒 الوضع الخاص والردود المفتوحة كتسناك...",
+        lockTeaser: "🔒 رسالة صوتية خاصة والوضع المفتوح كيتسناك...",
         unlockBtn: "تأكيد +18 والمتابعة الآن 🔥",
         lockNote: "دخول فوري • سرية تامة 100%",
-        fallback: "ممم، عجبني أسلوبك 😉 كمل قولي ليا كثر قبل ما يسالي العرض المجاني..."
+        fallbacks: [
+          "ممم، عجبني أسلوبك من أول ميساج 😉 قولي ليا شنو غدير إلا كنت حداك دابا؟",
+          "واو، جريء بزاف 🔥 كتعرف كيفاش تجذب انتباهي... كمل قولي ليا كثر.",
+          "بديت كنتحمس معاك 💋 ما توقفش دابا—فتح الشات الخاص باش نكملو بلا حدود."
+        ]
       },
       es: {
         dir: "ltr",
-        status: "En línea • Chat Privado +18",
+        onlineNow: "En línea",
+        heroSub: "En línea • Chat Privado +18",
+        bio: "Busco a alguien divertido para hacerme compañía esta noche 😉 Sin filtros, solo tú y yo en privado.",
+        tags: ["🔥 Coqueta", "💋 Chat Privado", "🔒 100% Discreto"],
+        startBtn: "Iniciar Chat Privado 🔥",
+        typing: "Escribiendo...",
         placeholder: "Escribe un mensaje privado...",
-        welcome: "Hola guapo 😉 Soy Sofía. Estoy en línea para un chat privado +18. ¿En qué estás pensando esta noche?",
+        welcome: "Hola guapo 😉 Qué bien que entraste a mi perfil. Estoy conectada ahora mismo—¿en qué estás pensando esta noche?",
         chips: ["¿Estás sola? 😈", "Cuéntame un secreto 🔥", "¿Jugamos a algo? 💋"],
         lockTitle: "Desbloquea el Chat +18 Ilimitado",
         lockDesc: "Tus 3 mensajes gratis terminaron. Confirma que tienes +18 para seguir chateando sin límites.",
-        lockTeaser: "🔒 Modo Privado y Respuestas Sin Filtro listas...",
+        lockTeaser: "🔒 1 Nota de Voz Privada y Modo Sin Filtro listas...",
         unlockBtn: "VERIFICAR +18 Y CONTINUAR 🔥",
         lockNote: "Acceso instantáneo • 100% Discreto",
-        fallback: "Mmm, me gusta cómo piensas 😉 Cuéntame más antes de que termine la prueba..."
+        fallbacks: [
+          "Mmm, ya me gusta tu energía 😉 Dime qué harías si estuviera justo a tu lado...",
+          "Uy, qué atrevido 🔥 Sabes muy bien cómo llamar mi atención. Sigue...",
+          "Me está encantando esto 💋 No pares ahora—desbloquea nuestra sala privada para seguir."
+        ]
       }
     };
+
+    // DOM Elements
+    const profileView = document.getElementById("profileView");
+    const chatView = document.getElementById("chatView");
+    const startChatBtn = document.getElementById("startChatBtn");
+    const backToProfileBtn = document.getElementById("backToProfileBtn");
+    const langSelect = document.getElementById("langSelect");
 
     const chatMessages = document.getElementById("chatMessages");
     const chatForm = document.getElementById("chatForm");
     const userInput = document.getElementById("userInput");
     const sendBtn = document.getElementById("sendBtn");
     const msgCounter = document.getElementById("msgCounter");
+    const chatStatus = document.getElementById("chatStatus");
+    const quickReplies = document.getElementById("quickReplies");
     const lockOverlay = document.getElementById("lockOverlay");
     const unlockBtn = document.getElementById("unlockBtn");
-    const quickReplies = document.getElementById("quickReplies");
-    const langSelect = document.getElementById("langSelect");
 
     let currentLang = detectLanguage();
     let userMsgCount = 0;
     let isBusy = false;
+    let chatInitialized = false;
     let history = [];
 
     function detectLanguage() {
@@ -595,10 +940,27 @@
     function applyLanguage(lang) {
       currentLang = lang;
       const t = TRANSLATIONS[lang];
+      document.documentElement.lang = lang;
       document.documentElement.dir = t.dir;
       langSelect.value = lang;
 
-      document.getElementById("statusText").textContent = t.status;
+      // Profile View Text
+      document.getElementById("profileOnlineLabel").textContent = t.onlineNow;
+      document.getElementById("heroSub").textContent = t.heroSub;
+      document.getElementById("profileBio").textContent = t.bio;
+      startChatBtn.textContent = t.startBtn;
+
+      const tagsContainer = document.getElementById("neonTags");
+      tagsContainer.innerHTML = "";
+      t.tags.forEach((tag) => {
+        const span = document.createElement("span");
+        span.className = "neon-tag";
+        span.textContent = tag;
+        tagsContainer.appendChild(span);
+      });
+
+      // Chat View Text
+      if (!isBusy) chatStatus.textContent = t.onlineNow;
       userInput.placeholder = t.placeholder;
       document.getElementById("lockTitle").textContent = t.lockTitle;
       document.getElementById("lockDesc").textContent = t.lockDesc;
@@ -617,10 +979,7 @@
         btn.type = "button";
         btn.className = "quick-chip";
         btn.textContent = text;
-        btn.onclick = () => {
-          userInput.value = text;
-          handleSend(text);
-        };
+        btn.onclick = () => handleSend(text);
         quickReplies.appendChild(btn);
       });
     }
@@ -639,6 +998,7 @@
     }
 
     function showTyping() {
+      chatStatus.textContent = TRANSLATIONS[currentLang].typing;
       const div = document.createElement("div");
       div.className = "msg ai typing";
       div.id = "typingIndicator";
@@ -648,6 +1008,7 @@
     }
 
     function removeTyping() {
+      chatStatus.textContent = TRANSLATIONS[currentLang].onlineNow;
       const el = document.getElementById("typingIndicator");
       if (el) el.remove();
     }
@@ -658,6 +1019,23 @@
       sendBtn.disabled = true;
       quickReplies.style.display = "none";
     }
+
+    // View Navigation
+    startChatBtn.addEventListener("click", () => {
+      profileView.classList.remove("active");
+      chatView.classList.add("active");
+
+      if (!chatInitialized) {
+        chatInitialized = true;
+        appendMessage(TRANSLATIONS[currentLang].welcome, "ai");
+      }
+      setTimeout(() => userInput.focus(), 300);
+    });
+
+    backToProfileBtn.addEventListener("click", () => {
+      chatView.classList.remove("active");
+      profileView.classList.add("active");
+    });
 
     async function handleSend(rawText) {
       const text = rawText.trim();
@@ -674,7 +1052,9 @@
 
       showTyping();
 
-      let replyText = TRANSLATIONS[currentLang].fallback;
+      const t = TRANSLATIONS[currentLang];
+      let replyText = t.fallbacks[Math.min(userMsgCount - 1, t.fallbacks.length - 1)];
+
       try {
         const res = await fetch(CONFIG.apiEndpoint, {
           method: "POST",
@@ -694,9 +1074,12 @@
             data.message ||
             data?.choices?.[0]?.message?.content ||
             replyText;
+        } else {
+          await new Promise((r) => setTimeout(r, 750));
         }
       } catch (err) {
-        // Fallback reply used automatically
+        // Simulated natural typing delay in live preview when backend isn't running
+        await new Promise((r) => setTimeout(r, 750));
       }
 
       removeTyping();
@@ -707,7 +1090,7 @@
       sendBtn.disabled = false;
 
       if (userMsgCount >= CONFIG.maxFreeMessages) {
-        setTimeout(triggerLock, 1200);
+        setTimeout(triggerLock, 1100);
       } else {
         userInput.focus();
       }
@@ -729,7 +1112,7 @@
       cursorGlow.style.top = `${e.clientY}px`;
     });
 
-    // Animated Pink & Red Neon Particles Background
+    // Animated Pink & Red Neon Particles Canvas
     const canvas = document.getElementById("bgCanvas");
     const ctx = canvas.getContext("2d");
     let particles = [];
@@ -740,13 +1123,13 @@
     }
 
     function initParticles() {
-      particles = Array.from({ length: 34 }, () => ({
+      particles = Array.from({ length: 36 }, () => ({
         x: Math.random() * canvas.width,
         y: Math.random() * canvas.height,
-        r: Math.random() * 2.6 + 1,
+        r: Math.random() * 2.5 + 1,
         vx: (Math.random() - 0.5) * 0.65,
         vy: (Math.random() - 0.5) * 0.65,
-        color: Math.random() > 0.45 ? "rgba(255, 0, 127, 0.75)" : "rgba(255, 23, 68, 0.75)"
+        color: Math.random() > 0.45 ? "rgba(255, 0, 127, 0.78)" : "rgba(255, 23, 68, 0.78)"
       }));
     }
 
@@ -779,7 +1162,7 @@
     // Init App
     applyLanguage(currentLang);
     updateCounter();
-    appendMessage(TRANSLATIONS[currentLang].welcome, "ai");
   </script>
 </body>
 </html>
+```
